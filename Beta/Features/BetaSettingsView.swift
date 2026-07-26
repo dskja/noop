@@ -132,20 +132,20 @@ struct BetaSettingsView: View {
                     Spacer()
                 }
 
-                Picker("System", selection: $unitSystem) {
+                Picker("System", selection: Binding(get: { unitSystem }, set: { unitSystem = $0 })) {
                     Text("Metric").tag(UnitSystem.metric)
                     Text("Imperial").tag(UnitSystem.imperial)
                 }
                 .pickerStyle(.segmented)
                 .foregroundColor(BetaPalette.primary)
 
-                Picker("Temperature", selection: $tempUnit) {
+                Picker("Temperature", selection: Binding(get: { tempUnit }, set: { tempUnit = $0 })) {
                     Text("°C").tag(TemperatureUnit.celsius)
                     Text("°F").tag(TemperatureUnit.fahrenheit)
                 }
                 .pickerStyle(.segmented)
 
-                Picker("Effort Scale", selection: $effortScale) {
+                Picker("Effort Scale", selection: Binding(get: { effortScale }, set: { effortScale = $0 })) {
                     Text("0–100").tag(EffortScale.hundred)
                     Text("0–21").tag(EffortScale.whoop)
                 }

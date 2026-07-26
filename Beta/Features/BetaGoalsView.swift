@@ -11,7 +11,7 @@ struct BetaGoalsView: View {
     @AppStorage("beta.goal.sleepHours") private var sleepGoalHours = 7.5
     @AppStorage("beta.goal.minRecovery") private var minRecovery = 50.0
     @AppStorage("beta.goal.weeklyStrain") private var weeklyStrainTarget = 250.0
-    @AppStorage("beta.goal.dailySteps") private var dailyStepsTarget = 8000
+    @AppStorage("beta.goal.dailySteps") private var dailyStepsTarget = 8000.0
 
     var body: some View {
         NavigationStack {

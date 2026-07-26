@@ -279,7 +279,7 @@ final class BetaAICoachEngine: ObservableObject {
         guard !days.isEmpty else { return "No wearable data available yet." }
 
         let recent = Array(days.suffix(7)).reversed()
-        var lines: ["USER BIOMETRIC SUMMARY (last 7 days, newest first):"]
+        var lines: [String] = ["USER BIOMETRIC SUMMARY (last 7 days, newest first):"]
         for d in recent {
             let charge = d.recovery.map { Int($0.rounded()) } ?? nil
             let effort = d.strain.map { Int($0.rounded()) } ?? nil

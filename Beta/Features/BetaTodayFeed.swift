@@ -7,7 +7,7 @@ import WhoopStore
 // Card-based vertical feed showing today's recovery, strain, sleep, live HR,
 // streaks, and a coaching snippet. Visually distinct from the main app's TodayView.
 
-extension CachedSleepSession: Identifiable {
+extension @retroactive CachedSleepSession: Identifiable {
     public var id: Int { startTs }
 }
 

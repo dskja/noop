@@ -34,7 +34,7 @@ struct BetaCoachChat: View {
                             .foregroundColor(BetaPalette.textPrimary)
                     }
                 }
-                ToolbarItem(placement: .topTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         betaCoach.dataConsent.toggle()
                     } label: {

@@ -1,5 +1,6 @@
 import SwiftUI
 import StrandAnalytics
+import WhoopStore
 
 // MARK: - Beta Insights View
 //

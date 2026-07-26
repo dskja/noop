@@ -76,11 +76,11 @@ struct BetaCard<Content: View>: View {
             .padding(padding)
             .background(
                 RoundedRectangle(cornerRadius: 24)
-                    .fill(gradient ?? AnyGradient(LinearGradient(
+                    .fill(gradient ?? LinearGradient(
                         colors: [BetaPalette.cardBackground, BetaPalette.cardBackgroundElevated],
                         startPoint: .top,
                         endPoint: .bottom
-                    )))
+                    ))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 24)

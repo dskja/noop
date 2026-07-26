@@ -17,8 +17,8 @@ struct BetaOnboarding: View {
 
     @State private var step = 0
     @State private var ageText = ""
-    @State private var selectedSex: ProfileStore.Sex = .male
-    @State private var unitSystem: ProfileStore.UnitSystem = .metric
+    @State private var selectedSex: String = "male"
+    @State private var unitSystem: UnitSystem = .metric
     @State private var animateContent = false
 
     private let totalSteps = 6
@@ -159,7 +159,7 @@ struct BetaOnboarding: View {
             Image(systemName: live.connected ? "checkmark.circle.fill" : "antenna.radiowaves.left.and.right")
                 .font(.system(size: 64))
                 .foregroundColor(live.connected ? BetaPalette.tertiary : BetaPalette.primary)
-                .symbolEffect(live.connected ? .bounce : .pulse)
+                .symbolEffect(.pulse)
 
             VStack(spacing: 8) {
                 Text(live.connected ? "Strap Connected!" : "Connect Your Strap")
@@ -230,8 +230,8 @@ struct BetaOnboarding: View {
                             .font(BetaFont.subheadline())
                             .foregroundColor(BetaPalette.textSecondary)
                         HStack(spacing: 12) {
-                            sexButton(.male, "Male")
-                            sexButton(.female, "Female")
+                            sexButton("male", "Male")
+                            sexButton("female", "Female")
                         }
                     }
 
@@ -252,7 +252,7 @@ struct BetaOnboarding: View {
         .padding(.horizontal, 32)
     }
 
-    private func sexButton(_ sex: ProfileStore.Sex, _ label: String) -> some View {
+    private func sexButton(_ sex: String, _ label: String) -> some View {
         Button(label) {
             selectedSex = sex
             profile.sex = sex
@@ -265,10 +265,10 @@ struct BetaOnboarding: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
-    private func unitButton(_ system: ProfileStore.UnitSystem, _ label: String) -> some View {
+    private func unitButton(_ system: UnitSystem, _ label: String) -> some View {
         Button(label) {
             unitSystem = system
-            profile.units = system
+            UserDefaults.standard.set(system.rawValue, forKey: UnitPrefs.systemKey)
         }
         .font(BetaFont.subheadline())
         .frame(maxWidth: .infinity)
@@ -312,7 +312,7 @@ struct BetaOnboarding: View {
             Image(systemName: "rocket.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(BetaPalette.heroGradient)
-                .symbolEffect(.bounce)
+                .symbolEffect(.pulse)
 
             VStack(spacing: 12) {
                 Text("You're all set!")
@@ -341,7 +341,7 @@ struct BetaOnboarding: View {
             // Save profile
             if let age = Int(ageText), age > 0 { profile.age = age }
             profile.sex = selectedSex
-            profile.units = unitSystem
+            UserDefaults.standard.set(unitSystem.rawValue, forKey: UnitPrefs.systemKey)
         }
         if step == totalSteps - 1 {
             finish()
