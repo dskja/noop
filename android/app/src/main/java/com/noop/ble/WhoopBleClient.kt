@@ -1521,6 +1521,8 @@ class WhoopBleClient(
     private val drainCccdRetryRunnable = Runnable { gatt?.let { drainCccdQueue(it) } }
     /** Set once startSession() has fired the first command, so it runs exactly once per connection. */
     private var sessionStarted = false
+    /** WHOOP 5/MG only: the R22 deep-data enable sequence has already been sent on this connection. */
+    private var whoop5DeepDataApplied = false
 
     // ====================================================================================
     // MARK: Public API  (port of BLEManager.connect / disconnect / send + buzz helper)
@@ -4123,6 +4125,12 @@ class WhoopBleClient(
                 send(CommandNumber.SET_CLOCK, setClockPayload(), withResponse = true)
                 send(CommandNumber.GET_CLOCK, byteArrayOf(), withResponse = true)
                 log("WHOOP 5/MG: clock synced (set/get) — strap can persist history now")
+                // Re-apply the R22 deep-data enable sequence if the user opted in (#174).
+                // The function's own guards handle family/bond/wear; we just ensure it fires once per connection.
+                if (puffinExperiment.isDeepDataEnabled && !whoop5DeepDataApplied) {
+                    whoop5DeepDataApplied = true
+                    enableWhoop5DeepData()
+                }
                 if (!backfillStarted) {
                     backfillStarted = true
                     handler.postDelayed({ requestSync() }, INITIAL_BACKFILL_DELAY_MS)
@@ -4985,6 +4993,7 @@ class WhoopBleClient(
         cccdInFlight = false
         cccdRetries = 0
         sessionStarted = false
+        whoop5DeepDataApplied = false
         // Clear the onMtuChanged dedup (#50) so the first MTU callback of the NEXT connection — even to
         // the same strap with the same granted mtu — is never mistaken for a duplicate of the last one.
         lastMtuValue = -1

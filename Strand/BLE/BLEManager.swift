@@ -671,6 +671,10 @@ public final class BLEManager: NSObject, ObservableObject {
     /// startBackfillTimer). Stops the HISTORY_END acks re-entering didWriteValueFor from re-triggering
     /// the offload mid-stream (the 5/MG twin of the WHOOP4 connectHandshakeDone ack-storm guard).
     private var whoop5SessionStarted = false
+    /// WHOOP 5/MG only: the R22 deep-data enable sequence has already been sent on this connection,
+    /// so the auto-apply path only fires once per bond (mirrors whoop5SessionStarted but gates the
+    /// 15-flag SET_CONFIG burst separately from the offload kick).
+    private var whoop5DeepDataApplied = false
     /// Backfill ACKs can arrive hundreds or thousands of times in one offload. Keep the strap log
     /// readable and avoid forcing SwiftUI to auto-scroll on every ACK row.
     private var historicalAckLogCounter = 0
@@ -2760,6 +2764,7 @@ extension BLEManager: @preconcurrency CBCentralManagerDelegate {
         // stream comes back automatically.
         realtimeArmed = false
         whoop5SessionStarted = false
+        whoop5DeepDataApplied = false
         clockRequested = false
         connectHandshakeDone = false
         realtimeArmedAt = nil   // cleared after the marginal-radio detector above read it (#80)
@@ -3161,6 +3166,12 @@ extension BLEManager: @preconcurrency CBPeripheralDelegate {
                 log("WHOOP 5/MG: connect handshake done — backfill unblocked")
                 // Re-apply the Broadcast-HR device-config flag if the user opted in (#181).
                 if PuffinExperiment.broadcastHrEnabled { setBroadcastHr(true) }
+                // Re-apply the R22 deep-data enable sequence if the user opted in (#174).
+                // The function's own guards handle family/bond/wear; we just ensure it fires once per connection.
+                if PuffinExperiment.deepDataEnabled, !whoop5DeepDataApplied {
+                    whoop5DeepDataApplied = true
+                    enableWhoop5DeepData()
+                }
                 // Clock the strap BEFORE history: an un-clocked WHOOP 5 discards sensor data ("RTC
                 // timestamp … is invalid; not saving data to flash") and history offloads "succeed"
                 // with metadata only. Same 8-byte payload as the WHOOP4 handshake, puffin-framed;
