@@ -124,6 +124,8 @@ struct RootTabView: View {
         .onChange(of: router.requestedDestination) { _, dest in
             switch dest {
             case .devices:
+                // Devices lives in the Sources tab’s Data group.
+                withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 3 }
                 showDevices = true
                 router.requestedDestination = nil
             case .insightsHub:
@@ -131,12 +133,16 @@ struct RootTabView: View {
                 withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 1 }
                 router.requestedDestination = nil
             case .labBook, .fusedRecord, .rhythm, .trends:
+                // The v5 pillars all live under Sources on iPhone (Insights hub is the exception above).
+                // Switch to Sources before presenting the sheet so the FloatingTabBar stays honest.
+                withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 3 }
                 routedPillar = dest
                 router.requestedDestination = nil
             case .activeWorkout:
-                // The Today active-workout indicator opens Live through the quick-action Live sheet; once
-                // it's up, LiveView consumes the one-shot `presentActiveWorkout` flag and presents the
-                // in-exercise screen. Calm sheet easing, matching the other quick-action presents.
+                // The active-workout indicator routes to the Live surface (Sources > Body), so the tab
+                // should follow. Once the sheet is up, LiveView consumes the one-shot `presentActiveWorkout`
+                // flag and presents the in-exercise screen.
+                withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 3 }
                 withAnimation(Self.sheetEase) { quickAction = .live }
                 router.requestedDestination = nil
             case .liveSession:
