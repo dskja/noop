@@ -1,7 +1,7 @@
 # WHOOP 5.0 / MG deep data — the "R22" unlock
 
 **Status:** experimental, opt-in, awaiting on-hardware confirmation.
-**Tracking:** [#174](https://github.com/ParthJadhav/noop/issues/174).
+**Tracking:** [#174](https://github.com/dskja/noop/issues/174).
 
 ## The problem
 
@@ -66,9 +66,12 @@ tune channel selection, wear detection and sleep behaviour.
 
 - A **default-off** Settings → Experimental toggle, separate from the read-only probes because this one
   *writes* to the strap.
-- A manual **"Send enable sequence to strap"** button (not auto-run on connect), enabled only when a
-  5/MG is **bonded and worn** (the R22 stream is on-wrist gated).
-- The 15 flags are written with-response, ~80 ms apart.
+- The 15 flags are **automatically re-applied once per encrypted 5/MG bond** when the toggle is on, so a
+  reconnect does not silently disable deep data again.
+- A manual **"Send enable sequence to strap"** button is still available in Settings, enabled only when a
+  5/MG is **bonded and worn** (the R22 stream is on-wrist gated). Useful if the strap was off-wrist at
+  connect and is put on later.
+- The flags are written with-response, ~80 ms apart.
 - It's **reversible** — it only changes which data the strap chooses to emit — and is the same thing the
   official app does on every connect.
 - **iOS / Android only on real hardware:** macOS CoreBluetooth can't complete the authenticated SMP bond
@@ -91,7 +94,8 @@ tune channel selection, wear detection and sleep behaviour.
 ## How to help (5.0 / MG owners)
 
 1. Update to the latest NOOP, **Settings → Experimental → "Unlock WHOOP 5/MG deep data (R22)"**.
-2. With the strap **on and bonded**, tap **Send enable sequence to strap**.
+2. With the strap **on and bonded**, the sequence is sent automatically on the next reconnect. If the strap
+   was off-wrist at connect, you can still tap **Send enable sequence to strap** once it is on.
 3. Keep wearing it, let it sync, then **share your strap log** on #174 — we're looking for new deep
    records (type `0x2F`) to start arriving.
 4. Even better: a Bluetooth HCI capture of the **official app syncing a night's history** shows the deep
