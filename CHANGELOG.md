@@ -17,6 +17,16 @@ approximate; downloads are on the [Releases](https://github.com/ParthJadhav/noop
 
 ---
 
+## 9.1.0: Coupled view on iOS
+
+A focused release that finishes wiring the optional Coupled day view into the iOS Strand shell.
+
+**New.**
+
+- **Coupled view is now fully delivered on iOS.** The optional one-glance day screen — recovery, day strain on the 0 to 21 scale, and sleep together — can be added as a card in Today’s Customise, tapped through from the Today or Liquid Today dashboard, and reached from the shared NavRouter route. It remains optional and off by default.
+
+---
+
 ## 9.0.1: Strand Sources parity fix (iOS)
 
 A focused polish release that keeps the v5 Strand hubs from drifting apart across platforms.

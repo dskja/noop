@@ -28,6 +28,8 @@ final class NavRouter: ObservableObject {
         case trends
         case activeWorkout
         case liveSession
+        /// The Coupled view (task #43) — a Today-card tap-through that the shell routes to the Today tab.
+        case coupled
 
         var id: String { rawValue }
 
@@ -77,4 +79,6 @@ final class NavRouter: ObservableObject {
     /// directly today; this route exists for deep-link parity so a future shell/inbox item can raise it
     /// the same way as every other destination.
     func openLiveSession() { requestedDestination = .liveSession }
+    /// Open the Coupled view (task #43) from a deep-link / widget / cross-screen request.
+    func openCoupled() { requestedDestination = .coupled }
 }

@@ -150,6 +150,12 @@ struct RootTabView: View {
                 // so a deep-link lands on the Today tab where that entry lives.
                 withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 0 }
                 router.requestedDestination = nil
+            case .coupled:
+                // The Coupled view is a Today-card tap-through; land on Today and present it as a sheet
+                // so the FloatingTabBar stays honest to the Today tab while the classic day read is open.
+                withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 0 }
+                routedPillar = dest
+                router.requestedDestination = nil
             case nil:
                 break
             }
@@ -184,6 +190,9 @@ struct RootTabView: View {
                 // .liveSession routes to the Today tab (handled above — its Start entry owns the cover);
                 // this keeps the switch exhaustive and falls back to Today if it ever reaches the host.
                 case .liveSession: LiquidTodayView()
+                // .coupled is presented from the Today dashboard card; this keeps the switch exhaustive
+                // when a deep-link routes to the Coupled view through the shared pillar sheet.
+                case .coupled: CoupledView()
                 }
             }
             .background(StrandPalette.surfaceBase.ignoresSafeArea())

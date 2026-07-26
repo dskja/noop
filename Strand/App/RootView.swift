@@ -323,6 +323,9 @@ struct RootView: View {
             // Live Sessions is presented from Today's own Start entry (a cover, not a sidebar item), so a
             // deep-link lands the user on Today where that entry lives.
             case .liveSession: selection = .today
+            // The Coupled view lives behind Today's "Your cards" dashboard; a cross-screen route lands on
+            // Today and expands the Today group so the Coupled card is reachable.
+            case .coupled: selection = .today
             case nil: break
             }
             if dest != nil { router.requestedDestination = nil }

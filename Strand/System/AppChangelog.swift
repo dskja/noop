@@ -7,7 +7,7 @@ enum AppChangelog {
 
     /// Bump this when you add a release below. The "What's New" sheet shows automatically when the
     /// stored last-seen version is behind this. (Decoupled from the bundle version on purpose.)
-    static let currentVersion = "9.0.1"
+    static let currentVersion = "9.1.0"
 
     struct Release: Identifiable {
         let version: String
@@ -19,6 +19,13 @@ enum AppChangelog {
 
     /// Newest first.
     static let releases: [Release] = [
+        Release(
+            version: "9.1.0",
+            title: "Coupled view on iOS",
+            date: "July 2026",
+            items: [
+                "**Coupled view on iOS.** The optional one-glance day screen (recovery, day strain on the 0–21 scale, and sleep in one place) is now fully wired into the iOS Strand shell. Add it as a card in Today’s Customise, tap through from the Today or Liquid Today dashboard, and navigate to it via the shared NavRouter route. It stays optional and off by default.",
+            ]),
         Release(
             version: "9.0.1",
             title: "Strand polish: Sources parity fix",
