@@ -2,7 +2,7 @@
 
 > **Status:** the original Homebrew tap belonged to the discontinued upstream project and may no
 > longer be available. This mirror currently hosts macOS builds as `.zip` assets on
-> [GitHub Releases](https://github.com/ParthJadhav/noop/releases). Treat the notes below as
+> [GitHub Releases](https://github.com/dskja/noop/releases). Treat the notes below as
 > historical release-process documentation until a new tap is created for this repository.
 
 macOS users install + auto-update NOOP with:

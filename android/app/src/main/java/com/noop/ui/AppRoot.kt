@@ -104,10 +104,11 @@ import androidx.navigation.compose.rememberNavController
 // MARK: - Navigation model
 //
 // The macOS app's sidebar holds many sections; on Android (mirroring the iOS RootTabView) we surface
-// them through a unified floating "glass" bottom bar (Today · Trends · Sleep · More) for the everyday
-// screens, with a "More" sheet that lists the full grouped set — so every destination is one tap away
-// without a global hamburger/drawer. Destinations are grouped exactly as the sidebar groups them.
-// Routes whose screens belong to later waves point at a ComingSoon placeholder so the app compiles today.
+// the v5 Strand hubs through a unified floating "glass" bottom bar (Today · Insights · Health · Sources)
+// for the everyday screens, with a Sources page that lists the full grouped set — so every destination
+// is one tap away without a global hamburger/drawer. Sleep and Trends moved from bottom-bar tabs into
+// the Sources index, matching iOS. Routes whose screens belong to later waves point at a ComingSoon
+// placeholder so the app compiles today.
 
 /** A single drawer destination: stable route, display title (localized via [titleRes]), sidebar icon. */
 private enum class Destination(
@@ -195,18 +196,19 @@ private data class DrawerGroup(
     val defaultExpanded: Boolean,
 )
 
-// Mirrors the iOS RootTabView `moreTab` grouping + order one-for-one. Today / Trends / Sleep are NOT
-// listed (they're bottom-bar tabs, exactly as on iOS). Android-only screens (Vital Signs, Wake Window,
-// Notifications, Devices) are slotted into the matching iOS group.
+// Mirrors the iOS Sources tab grouping + order one-for-one. Today / Insights / Health are the four
+// bottom-bar tabs; Sleep and Trends moved from the old bottom bar into the Health group inside Sources.
+// Android-only screens (Vital Signs, Wake Window, Notifications, Devices) are slotted into the matching iOS group.
 private val drawerGroups: List<DrawerGroup> = listOf(
     DrawerGroup("Insights", R.string.more_group_insights, listOf(
         Destination.InsightsHub, Destination.Intelligence, Destination.Coach,
         Destination.Insights, Destination.Explore, Destination.Compare,
     ), defaultExpanded = true),
+    // v5: the old "Body" group is now the Health index inside Sources, and it also holds Sleep + Trends.
     DrawerGroup("Body", R.string.more_group_body, listOf(
-        Destination.Live, Destination.Workouts, Destination.Health, Destination.VitalSigns,
-        Destination.LabBook, Destination.Stress, Destination.Breathe, Destination.Intervals,
-        Destination.Rhythm,
+        Destination.Sleep, Destination.Trends, Destination.Live, Destination.Workouts,
+        Destination.Health, Destination.VitalSigns, Destination.LabBook, Destination.Stress,
+        Destination.Breathe, Destination.Intervals, Destination.Rhythm,
     ), defaultExpanded = true),
     DrawerGroup("Data", R.string.more_group_data, listOf(
         Destination.FusedRecord, Destination.AppleHealth, Destination.DataSources,
@@ -278,11 +280,11 @@ fun AppRoot(viewModel: AppViewModel = viewModel()) {
         Scaffold(
             containerColor = Palette.surfaceBase,
             bottomBar = {
-                // One unified "glass" bar: four evenly-spaced tabs — Today · Trends · Sleep · More
-                // (matches the iOS FloatingTabBar). The quick-action "+" lives in the Today header's
-                // top-right (balancing the avatar), so the bar is clean tabs only. "More" navigates to
-                // its own page (mirroring the iOS More tab) that reaches every grouped destination, so no
-                // destination is lost without the drawer.
+                // One unified "glass" bar: four evenly-spaced tabs — Today · Insights · Health · Sources
+                // (matches the iOS v5 Strand FloatingTabBar). The quick-action "+" lives in the Today
+                // header's top-right (balancing the avatar), so the bar is clean tabs only. "Sources"
+                // navigates to its own page (mirroring the iOS Sources tab) that reaches every grouped
+                // destination, so no destination is lost without the drawer.
                 GlassBottomBar(
                     current = current,
                     onTabSelected = { dest ->
@@ -570,8 +572,8 @@ private fun MoreScreen(onNavigate: (String) -> Unit) {
         }
     }
     ScreenScaffold(
-        title = "More",
-        subtitle = "Everything else, one tap away",
+        title = "Sources",
+        subtitle = "Devices, imports and tools",
     ) {
         // Mirror the iOS More page: each group is a tappable UPPERCASE overline header (with a disclosure
         // chevron) over a single grouped white NoopCard whose rows are tight (accent icon + title +
@@ -679,15 +681,14 @@ private fun MoreRow(dest: Destination, onClick: () -> Unit) {
 /** A single bottom-bar nav slot: the destination it switches to, plus the bar-specific icon/label. */
 private data class BarTab(val dest: Destination, val icon: ImageVector, @StringRes val labelRes: Int)
 
-/** The nav slots in iOS order: Today · Trends · Sleep · More.
- *  More is special-cased (it opens the sheet rather than a route), so it is appended at the call site. */
+/** The nav slots in iOS v5 Strand order: Today · Insights · Health · Sources.
+ *  Sources is special-cased (it opens the Sources page rather than a route), so it is appended at the call site. */
 private val barLeadingTabs = listOf(
     BarTab(Destination.Today, Icons.Outlined.GridView, R.string.nav_today),
-    // chart.line.uptrend.xyaxis on iOS — the rising-trend glyph, not a flat bar chart.
-    BarTab(Destination.Trends, Icons.AutoMirrored.Filled.TrendingUp, R.string.nav_trends),
+    BarTab(Destination.InsightsHub, Icons.Filled.Insights, R.string.nav_insights),
 )
 private val barTrailingTabs = listOf(
-    BarTab(Destination.Sleep, Icons.Filled.Bedtime, R.string.nav_sleep),
+    BarTab(Destination.Health, Icons.Filled.MonitorHeart, R.string.nav_health),
 )
 
 @Composable
@@ -747,13 +748,13 @@ private fun GlassBottomBar(
                     )
                 }
                 BarSlot(
-                    icon = Icons.Filled.MoreHoriz,
-                    label = stringResource(R.string.nav_more),
-                    // Selected on the More page itself, and also kept lit whenever the current screen is
-                    // one reached THROUGH More (i.e. not one of the bar's own three tabs) — so drilling
-                    // into any grouped destination still reads as "you're in More", never "nowhere".
-                    active = current != Destination.Today && current != Destination.Trends &&
-                        current != Destination.Sleep,
+                    icon = Icons.Filled.Storage,
+                    label = stringResource(R.string.nav_sources),
+                    // Selected on the Sources page itself, and also kept lit whenever the current screen is
+                    // one reached THROUGH Sources (i.e. not one of the bar's own three tabs) — so drilling
+                    // into any grouped destination still reads as "you're in Sources", never "nowhere".
+                    active = current != Destination.Today && current != Destination.InsightsHub &&
+                        current != Destination.Health,
                     modifier = Modifier.weight(1f),
                     onClick = { onTabSelected(Destination.More) },
                 )

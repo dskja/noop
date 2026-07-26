@@ -17,6 +17,32 @@ approximate; downloads are on the [Releases](https://github.com/ParthJadhav/noop
 
 ---
 
+## 9.0.0: Strand — the v5 hub redesign (all platforms)
+
+A major milestone release that restructures NOOP around four everyday hubs: **Today**, **Insights**,
+**Health** and **Sources**. It is the same app underneath, with the same offline, on-device data, but
+the navigation is now consistent across iPhone, Mac and Android.
+
+**New.**
+
+- **The v5 Strand hub model.** Today is the dashboard. Insights is the home for What Moves You,
+  Intelligence, Coach, Explore and Compare. Health pulls together Live, Workouts, Stress, Breathe,
+  Sleep, Trends, Lab Book and Rhythm. Sources is the index for Devices, imports, data sources,
+  Backup & Sync, and app-level tools.
+- **iOS tab bar rebuilt.** The floating glass bar now shows Today, Insights, Health and Sources;
+  Sleep and Trends moved into the Sources index. The centre quick-action button still opens Live,
+  Workout, Journal and Breathe.
+- **macOS sidebar regrouped.** The sidebar now lists the same five hub sections (Today, Insights,
+  Health, Sources, Settings) and every destination remains reachable.
+- **Android bottom bar regrouped.** The glass bottom bar matches iOS with Today, Insights, Health
+  and Sources, and the Sources page groups the full destination list.
+- **WHOOP 5.0 / MG R22 deep data auto-applies once per encrypted bond.** When the deep-data
+  experiment is on, NOOP re-sends the R22 unlock sequence automatically after each secure 5/MG
+  connect handshake, so deep sensor streams come back without tapping a button after every reconnect.
+  The manual toggle stays available for off-wrist cases.
+
+---
+
 ## 7.9.0: Coupled view, a rebuilt workout list, and numbers in your journal (all platforms)
 
 Three sizeable new features, the fix wave that was in flight, and a hardening pass a pre-release

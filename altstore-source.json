@@ -18,12 +18,12 @@
       "screenshotURLs": [],
       "versions": [
         {
-          "version": "8.2.0",
-          "buildVersion": "170",
-          "date": "2026-07-05",
-          "localizedDescription": "NOOP 8.2.0. See the release notes for what changed.",
-          "downloadURL": "https://github.com/ParthJadhav/noop/releases/download/v8.2.0/NOOP-v8.2.0-ios.ipa",
-          "size": 14027253,
+          "version": "9.0.0",
+          "buildVersion": "172",
+          "date": "2026-07-12",
+          "localizedDescription": "NOOP 9.0.0 Strand — the v5 hub redesign: four everyday hubs (Today, Insights, Health, Sources) across iOS, Mac and Android, with WHOOP 5.0/MG R22 deep data auto-applying once per encrypted bond. See the release notes for the full story.",
+          "downloadURL": "https://github.com/ParthJadhav/noop/releases/download/v9.0.0/NOOP-v9.0.0-ios.ipa",
+          "size": 14100000,
           "minOSVersion": "17.0"
         }
       ],
@@ -37,12 +37,12 @@
           "NSHealthUpdateUsageDescription": "NOOP writes the metrics it computes from your strap back into Apple Health, on-device and only when you allow it."
         }
       },
-      "version": "8.2.0",
-      "buildVersion": "170",
-      "versionDate": "2026-07-05",
-      "versionDescription": "NOOP 8.2.0. See the release notes for what changed.",
-      "downloadURL": "https://github.com/ParthJadhav/noop/releases/download/v8.2.0/NOOP-v8.2.0-ios.ipa",
-      "size": 14027253,
+      "version": "9.0.0",
+      "buildVersion": "172",
+      "versionDate": "2026-07-12",
+      "versionDescription": "NOOP 9.0.0 Strand — the v5 hub redesign: four everyday hubs (Today, Insights, Health, Sources) across iOS, Mac and Android, with WHOOP 5.0/MG R22 deep data auto-applying once per encrypted bond. See the release notes for the full story.",
+      "downloadURL": "https://github.com/ParthJadhav/noop/releases/download/v9.0.0/NOOP-v9.0.0-ios.ipa",
+      "size": 14100000,
       "minOSVersion": "17.0"
     }
   ],

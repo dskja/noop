@@ -309,7 +309,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Sex")
                 }
                 rowDivider
@@ -590,7 +589,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Measurement system")
                 }
                 rowDivider
@@ -604,7 +602,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Temperature unit")
                 }
                 rowDivider
@@ -617,7 +614,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Effort scale")
                 }
             }
@@ -644,7 +640,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Theme")
                 }
                 FormRow(label: "Chart colours") {
@@ -657,7 +652,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("Chart colours")
                 }
                 #if os(iOS)
@@ -668,7 +662,6 @@ struct SettingsView: View {
                     }
                     .labelsHidden()
                     .pickerStyle(.segmented)
-                    .fixedSize()
                     .accessibilityLabel("App icon")
                     .onChangeCompat(of: useNavyIcon) { applyAppIcon($0) }
                 }

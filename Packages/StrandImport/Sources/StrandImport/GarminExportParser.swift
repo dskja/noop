@@ -24,6 +24,22 @@ enum GarminExportParser {
         var sleeps: [WearableSleepSession] = []
         func day(_ key: String) -> WearableDailyRow { byDay[key] ?? WearableDailyRow(day: key) }
 
+        // First pass: collect daily-summary calendarDate keys so sleep records can fall back to them
+        // when the sleep record itself lacks a calendarDate.
+        var dailyKeys: Set<String> = []
+        for (name, data) in files {
+            let base = (name as NSString).lastPathComponent
+            let records = elements(data)
+            if base.contains("sleepdata") || records.contains(where: { $0["deepSleepSeconds"] != nil || $0["sleepStartTimestampGMT"] != nil || $0["DeepSleepDurationInSeconds"] != nil }) {
+                continue
+            }
+            for d in records {
+                if let key = WearableJSON.str(d, "calendarDate") ?? WearableJSON.str(d, "calendar_date") {
+                    dailyKeys.insert(key)
+                }
+            }
+        }
+
         for (name, data) in files {
             let base = (name as NSString).lastPathComponent
             // A Garmin wellness file is usually a top-level array; some are { ... : [ ... ] }.
@@ -31,7 +47,7 @@ enum GarminExportParser {
 
             if base.contains("sleepdata") || records.contains(where: { $0["deepSleepSeconds"] != nil || $0["sleepStartTimestampGMT"] != nil || $0["DeepSleepDurationInSeconds"] != nil }) {
                 for s in records {
-                    guard let session = sleepSession(s), let key = sleepDayKey(s, session) else { continue }
+                    guard let session = sleepSession(s), let key = sleepDayKey(s, session, dailyKeys: dailyKeys) else { continue }
                     sleeps.append(session)
                     var row = day(key)
                     row.totalSleepMin = row.totalSleepMin ?? session.totalSleepMin
@@ -114,8 +130,16 @@ enum GarminExportParser {
         return WearableJSON.posInt(overall, "value")
     }
 
-    private static func sleepDayKey(_ s: [String: Any], _ session: WearableSleepSession) -> String? {
-        WearableJSON.str(s, "calendarDate") ?? WearableExportImporter.dayString(session.end)
+    private static func sleepDayKey(_ s: [String: Any], _ session: WearableSleepSession, dailyKeys: Set<String>) -> String? {
+        // 1. calendarDate on the sleep record itself — Garmin's intended day.
+        if let cal = WearableJSON.str(s, "calendarDate") { return cal }
+        // 2. Fall back to the daily summary whose calendarDate matches the sleep-start day.
+        //    A session starting Monday night and ending Tuesday morning belongs to Monday;
+        //    session.end would incorrectly attribute it to Tuesday.
+        let startKey = WearableExportImporter.dayString(session.start)
+        if dailyKeys.contains(startKey) { return startKey }
+        // 3. Last resort: use the end-time day.
+        return WearableExportImporter.dayString(session.end)
     }
 
     /// Parse a Garmin timestamp that may be epoch MILLISECONDS (number), epoch SECONDS, or an ISO

@@ -1,13 +1,12 @@
-> **Project status.** The original NOOP project used to live at `github.com/NoopApp/noop`, but that
-> repository has been deleted and the original developer appears to have discontinued the project.
-> This repository preserves the recovered source code and release artifacts for people who still rely
-> on NOOP. I am hosting this as a continuity mirror until the original developer brings the project
-> back. I am not promising updates at this time.
+> **Project status.** This is an actively maintained fork of [NOOP](https://github.com/ParthJadhav/noop),
+> originally preserved from the deleted `github.com/NoopApp/noop` by ParthJadhav. This fork continues
+> development, professionalization, and expansion of the codebase for the community.
 >
-> To WHOOP: you can request archival of this repository at any moment by creating an issue. I am not
-> here to deal with any hassle around it.
+> **Credits:** The original NOOP project was built on community interoperability work — see
+> [Attribution](#attribution) for the full list of upstream contributors. This fork builds on that
+> foundation with gratitude.
 >
-> I've removed all donation links and related material from this repository.
+> To WHOOP: you can request archival of this repository at any moment by creating an issue.
 
 <p align="center">
   <img src="docs/assets/logo-v3.png" alt="NOOP" width="72">
@@ -30,8 +29,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ParthJadhav/noop/releases/latest"><img alt="Latest release" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
-  <a href="https://github.com/ParthJadhav/noop/stargazers"><img alt="Stars" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fstars.json&style=flat-square"></a>
+  <a href="https://github.com/dskja/noop/releases/latest"><img alt="Latest release" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
+  <a href="https://github.com/dskja/noop/stargazers"><img alt="Stars" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fstars.json&style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -45,7 +44,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ParthJadhav/noop/releases/latest"><img src="docs/assets/hero-v8.jpg" alt="NOOP in the new Liquid Metal design, on iPhone, Mac and Android" width="820"></a>
+  <a href="https://github.com/dskja/noop/releases/latest"><img src="docs/assets/hero-v8.jpg" alt="NOOP in the new Liquid Metal design, on iPhone, Mac and Android" width="820"></a>
 </p>
 
 <p align="center">
@@ -61,11 +60,13 @@
 
 ## Project Continuity
 
-NOOP remains account-free, local-first software. This repository is a preservation mirror of the
-latest recovered source and artifacts after the original project disappeared.
+NOOP remains account-free, local-first software. This fork continues the work started by the original
+NOOP project and preserved by ParthJadhav. It is actively maintained and developed for the community
+of WHOOP users who want offline, on-device access to their own biometric data.
 
-Updates are not promised right now. The immediate goal is to keep the codebase and usable builds
-available until the original developer restores the project or a new maintenance plan exists.
+The original project's spirit — offline by design, transparent math, no account, no cloud — carries
+forward unchanged. This fork professionalizes the codebase, expands platform support, and keeps
+builds available for everyone who relies on it.
 
 ---
 
@@ -74,15 +75,15 @@ available until the original developer restores the project or a new maintenance
 Pre-built apps you can run right now:
 
 <p>
-  <a href="https://github.com/ParthJadhav/noop/releases/latest"><img alt="Version" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
-  <img alt="Released" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Freleased.json&style=flat-square">
+  <a href="https://github.com/dskja/noop/releases/latest"><img alt="Version" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
+  <img alt="Released" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Freleased.json&style=flat-square">
 </p>
 
 | Platform | Build | Notes |
 |---|---|---|
-| **macOS** | `NOOP-vX-macos.zip` (see [Releases](https://github.com/ParthJadhav/noop/releases)) | Apple Silicon + Intel. Unzip and drag `NOOP.app` to Applications. Not notarized — see **First launch on macOS** below. |
-| **Android** | `NOOP-vX.apk` (see [Releases](https://github.com/ParthJadhav/noop/releases)) | The full app. `minSdk 26` (Android 8+). Sideload — enable "install unknown apps". Blocked by Play Protect? See **Installing on Android** below. |
-| **iOS** | `NOOP-vX-ios.ipa` (see [Releases](https://github.com/ParthJadhav/noop/releases)) — sideload with AltStore/SideStore | Now a **direct download**. The `.ipa` is unsigned; **you** sign it on your iPhone with your own free Apple ID (no App Store, no developer account — NOOP stays anonymous). Re-signs every 7 days (AltStore automates it); Apple Health + Live Activity widgets may be limited under a free signing identity. See [docs/IOS.md](docs/IOS.md). Or build from source in Xcode. |
+| **macOS** | `NOOP-vX-macos.zip` (see [Releases](https://github.com/dskja/noop/releases)) | Apple Silicon + Intel. Unzip and drag `NOOP.app` to Applications. Not notarized — see **First launch on macOS** below. |
+| **Android** | `NOOP-vX.apk` (see [Releases](https://github.com/dskja/noop/releases)) | The full app. `minSdk 26` (Android 8+). Sideload — enable "install unknown apps". Blocked by Play Protect? See **Installing on Android** below. |
+| **iOS** | `NOOP-vX-ios.ipa` (see [Releases](https://github.com/dskja/noop/releases)) — sideload with AltStore/SideStore | Now a **direct download**. The `.ipa` is unsigned; **you** sign it on your iPhone with your own free Apple ID (no App Store, no developer account — NOOP stays anonymous). Re-signs every 7 days (AltStore automates it); Apple Health + Live Activity widgets may be limited under a free signing identity. See [docs/IOS.md](docs/IOS.md). Or build from source in Xcode. |
 
 > **First launch on macOS.** NOOP is **not notarized** by Apple — notarization needs a paid Apple
 > Developer ID tied to a real identity, which doesn't fit an anonymous, free project. The app *is*
@@ -245,8 +246,8 @@ with the strap and **score recovery, strain and sleep on your own device** — n
 import required.
 
 <p>
-  <a href="https://github.com/ParthJadhav/noop/releases/latest"><img alt="Latest across all platforms" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
-  <img alt="Commits per month" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
+  <a href="https://github.com/dskja/noop/releases/latest"><img alt="Latest across all platforms" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Frelease.json&style=flat-square"></a>
+  <img alt="Commits per month" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
   <img alt="Top language" src="https://img.shields.io/badge/languages-Swift%20%C2%B7%20Kotlin-E8B84B?style=flat-square">
   <img alt="Code size" src="https://img.shields.io/badge/build-from%20source-6B737B?style=flat-square">
 </p>
@@ -254,7 +255,7 @@ import required.
 | Platform | Status |
 |---|---|
 | **macOS** | ✅ Full app (`Strand/`, SwiftUI, macOS 13+). Pairs over BLE, offloads the strap's history, and scores recovery / strain / sleep on-device. The complete feature set above runs here. |
-| **Android** | ✅ Full app (`android/`, Jetpack Compose, Android 8+). Pairs over BLE, persists and scores on-device, and imports WHOOP / Apple Health / Health Connect. Grab the APK from [Releases](https://github.com/ParthJadhav/noop/releases). |
+| **Android** | ✅ Full app (`android/`, Jetpack Compose, Android 8+). Pairs over BLE, persists and scores on-device, and imports WHOOP / Apple Health / Health Connect. Grab the APK from [Releases](https://github.com/dskja/noop/releases). |
 | **iOS** | 📲 **Direct download**: an unsigned `.ipa` you sideload with AltStore/SideStore — it signs on your iPhone with your *own* free Apple ID, so there's an anonymous install path with no App Store / developer account (see [docs/IOS.md](docs/IOS.md)). Also still builds from source in Xcode. Shares the cross-platform Swift packages, so scoring matches macOS. Newer and less battle-tested than macOS/Android — live BLE on a real iPhone is still being validated; Apple Health + Live Activity widgets can be limited under a free signing identity. |
 
 ### Strap support
@@ -509,8 +510,8 @@ no DRM circumvention. Full detail in [`ATTRIBUTION.md`](ATTRIBUTION.md).
 ## Support
 
 **Community:** questions, setup help, tips, and release news → **[r/NOOPApp](https://www.reddit.com/r/NOOPApp/)**.
-**Bug reports:** please use **[GitHub Issues](https://github.com/ParthJadhav/noop/issues)** — there's a template, and they're tracked, deduped and linked to fixes (include a strap log).
-**Contact:** [thenoopapp@gmail.com](mailto:thenoopapp@gmail.com)
+**Bug reports:** please use **[GitHub Issues](https://github.com/dskja/noop/issues)** — there's a template, and they're tracked, deduped and linked to fixes (include a strap log).
+**Contact:** [thenoopapp@gmail.com](mailto:thenoopapp@gmail.com) · or open a GitHub issue.
 
 ---
 
@@ -549,12 +550,12 @@ under the same terms — see [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 
 ### Mirroring & forking
 
-NOOP is public and built to be hard to erase. **Clone it freely** — `git clone https://github.com/ParthJadhav/noop.git` — and you're welcome to **mirror or fork it** to Codeberg, GitLab or your own server. More copies make the project more resilient, which is the whole point after being deplatformed.
+NOOP is public and built to be hard to erase. **Clone it freely** — `git clone https://github.com/dskja/noop.git` — and you're welcome to **mirror or fork it** to Codeberg, GitLab or your own server. More copies make the project more resilient.
 
 Two simple asks:
 
 - **Keep it non-commercial** and keep the [`LICENSE`](LICENSE) + `Copyright 2026 NoopApp` notice intact (PolyForm Noncommercial — mirror and use freely, just don't sell it or ship it in a paid product).
-- **Point people back to the canonical home, [github.com/ParthJadhav/noop](https://github.com/ParthJadhav/noop)**, so everyone lands on the current code and releases rather than a stale fork.
+- **Credit upstream:** This fork builds on [ParthJadhav/noop](https://github.com/ParthJadhav/noop) (preservation) and the original NOOP project, which in turn built on `johnmiddleton12/my-whoop` (WHOOP 4.0 protocol) and `b-nnett/goose` (WHOOP 5.0 protocol). See [Attribution](#attribution) for the full chain.
 
 That's it — copy away.
 
@@ -576,12 +577,12 @@ forward. Huge thanks to everyone filing reports, sharing strap logs, and reverse
 protocol alongside us — this project is built on it.
 
 <p>
-  <img alt="Open issues" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fopen.json&style=flat-square">
-  <img alt="Issues resolved" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fresolved.json&style=flat-square">
-  <a href="https://github.com/ParthJadhav/noop/stargazers"><img alt="Stars" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fstars.json&style=flat-square"></a>
-  <img alt="Forks" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fforks.json&style=flat-square">
-  <img alt="Commits per month" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
-  <img alt="Last commit" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FParthJadhav%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
+  <img alt="Open issues" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fopen.json&style=flat-square">
+  <img alt="Issues resolved" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fresolved.json&style=flat-square">
+  <a href="https://github.com/dskja/noop/stargazers"><img alt="Stars" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fstars.json&style=flat-square"></a>
+  <img alt="Forks" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Fforks.json&style=flat-square">
+  <img alt="Commits per month" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
+  <img alt="Last commit" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdskja%2Fnoop%2Fmain%2Fdocs%2Fstats%2Flastcommit.json&style=flat-square">
 </p>
 
 ![Repobeats analytics image](https://repobeats.axiom.co/api/embed/97acba228c083adca8453a1ebf15f18dad2894be.svg "Repobeats analytics image")
@@ -590,4 +591,4 @@ protocol alongside us — this project is built on it.
 
 If NOOP's useful to you, a ⭐ genuinely helps it reach more WHOOP users — and it's the single best free way to support the project.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ParthJadhav/noop&type=Date)](https://star-history.com/#ParthJadhav/noop&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=dskja/noop&type=Date)](https://star-history.com/#dskja/noop&Date)

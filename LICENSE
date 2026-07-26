@@ -1,6 +1,11 @@
 NOOP is licensed under the PolyForm Noncommercial License 1.0.0, reproduced below.
 
-Copyright 2026 NoopApp
+Copyright © 2026 NoopApp (original project)
+Copyright © 2026 dskja (this fork — continued development and professionalization)
+
+This fork builds on the original NOOP project preserved by ParthJadhav, which in
+turn built on community reverse-engineering work by johnmiddleton12 (WHOOP 4.0)
+and b-nnett (WHOOP 5.0). See ATTRIBUTION.md for the full credit chain.
 
 Scope and notices:
 
@@ -12,7 +17,7 @@ Scope and notices:
   DISCLAIMER.md and ATTRIBUTION.md.
 - Third-party components keep their own licenses and are not relicensed by this
   file. See NOTICE for the full list (GRDB.swift and ZIPFoundation are MIT).
-- Required Notice: Copyright 2026 NoopApp
+- Required Notice: Copyright © 2026 NoopApp (original project) · Copyright © 2026 dskja (this fork)
 
 In short: NOOP is source-available and free for personal and other non-commercial
 use — read it, run it, fork it, and contribute. Commercial use is not granted by

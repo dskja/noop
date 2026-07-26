@@ -82,11 +82,15 @@ public struct WearableExportImporter {
     }
 
     /// True when every collected file is a raw heart-rate CSV (no daily-summary CSV/JSON among them): the
-    /// exact case in #857 where the user picked Oura's `heartrate.csv`.
+    /// exact case in #857 where the user picked Oura's `heartrate.csv`. Checks CONTENT, not filename: a raw
+    /// HR-sample CSV (timestamp + bpm columns) lacks the date + wellness-signal columns that
+    /// `OuraExportParser.looksLikeOuraCSV` requires, so it correctly falls through here. A daily-summary
+    /// CSV (date + sleep/HRV/steps/etc.) passes that check and is NOT flagged as a raw HR log.
     static func onlyHeartRateCSV(_ files: [String: Data]) -> Bool {
         guard !files.isEmpty else { return false }
-        return files.keys.allSatisfy { name in
-            name.hasSuffix(".csv") && (name.contains("heartrate") || name.contains("heart_rate"))
+        guard files.keys.allSatisfy({ $0.hasSuffix(".csv") }) else { return false }
+        return files.values.allSatisfy { data in
+            !OuraExportParser.looksLikeOuraCSV(CSVTable(data: data).normalizedHeaders)
         }
     }
 

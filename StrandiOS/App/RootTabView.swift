@@ -2,9 +2,10 @@
 import SwiftUI
 import StrandDesign
 
-/// iOS navigation shell. macOS uses a `NavigationSplitView` sidebar (`RootView`); on iPhone the
-/// natural analogue is a `TabView` with the most-used screens as tabs and everything else under a
-/// "More" list. Every screen is the same `StrandDesign`-built view the macOS app uses.
+/// iOS navigation shell for the v5 "Strand" hubs. macOS uses a `NavigationSplitView` sidebar (`RootView`);
+/// on iPhone the natural analogue is a `TabView` with the four everyday hubs (Today, Insights, Health,
+/// Sources) and the centre FAB for quick actions. Every screen is the same `StrandDesign`-built view the
+/// macOS app uses.
 struct RootTabView: View {
     @EnvironmentObject private var repo: Repository
     /// Cross-screen navigation requests (e.g. Live → "Manage devices"). Devices isn't a tab — it lives
@@ -62,9 +63,9 @@ struct RootTabView: View {
             // native TabView still drives content + per-tab nav state; only its bar is hidden.
             TabView(selection: $selectedTab) {
                 tab(todayTabRoot, "Today", "square.grid.2x2").tag(0)
-                tab(TrendsView(), "Trends", "chart.line.uptrend.xyaxis").tag(1)
-                tab(SleepView(), "Sleep", "bed.double").tag(2)
-                moreTab.tag(3)
+                tab(InsightsHubView(), "Insights", "lightbulb.fill").tag(1)
+                tab(HealthView(), "Health", "heart.text.square.fill").tag(2)
+                sourcesTab.tag(3)
             }
             .tint(StrandPalette.accent)
             .toolbar(.hidden, for: .tabBar)
@@ -118,18 +119,19 @@ struct RootTabView: View {
             pillarScreen(dest)
         }
         // Honour a router request: Devices keeps its dedicated sheet; the v5 pillars route through the
-        // shared pillar sheet. Cleared so the same tap can fire again later.
+        // shared pillar sheet. Trends now lives in the Sources index, so a request presents it as a sheet.
+        // Cleared so the same tap can fire again later.
         .onChange(of: router.requestedDestination) { _, dest in
             switch dest {
             case .devices:
                 showDevices = true
                 router.requestedDestination = nil
-            case .insightsHub, .labBook, .fusedRecord, .rhythm:
-                routedPillar = dest
-                router.requestedDestination = nil
-            case .trends:
-                // Trends is a primary tab on iPhone (not a pillar sheet) — switch to it.
+            case .insightsHub:
+                // Insights is now a primary hub — switch to it.
                 withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) { selectedTab = 1 }
+                router.requestedDestination = nil
+            case .labBook, .fusedRecord, .rhythm, .trends:
+                routedPillar = dest
                 router.requestedDestination = nil
             case .activeWorkout:
                 // The Today active-workout indicator opens Live through the quick-action Live sheet; once
@@ -271,14 +273,12 @@ struct RootTabView: View {
         .tabItem { Label(title, systemImage: icon) }
     }
 
-    // The "More" tab is the app's catch-all index. It was a plain SwiftUI `List` with system large-title
-    // + system title-case section headers, so it didn't match any other page (which all use ScreenScaffold
-    // + SectionHeader's UPPERCASE overline + the 28pt section rhythm). Rebuilt on the shared page chrome:
-    // ScreenScaffold for the title1 "More" + subtitle, a `SectionHeader` overline per group, and the group's
-    // rows in a single grouped NoopCard with hairline dividers — the same row idiom Settings/Health use.
-    private var moreTab: some View {
+    // The Sources tab is the v5 Strand hub for every non-primary destination: devices and imports,
+    // the body/mind tools, the deeper insight surfaces, and app-level settings. Sleep and Trends were
+    // previously their own tabs; they live here now so the everyday tab bar can stay to four hubs.
+    private var sourcesTab: some View {
         NavigationStack {
-            ScreenScaffold(title: "More", subtitle: "Everything else, one tap away",
+            ScreenScaffold(title: "Sources", subtitle: "Devices, imports and everything else",
                            onRefresh: { await repo.refresh() },
                            topBackground: liquidScaffoldSky()) {
                 moreSection("Insights") {
@@ -290,9 +290,10 @@ struct RootTabView: View {
                     MoreRow("Compare", "rectangle.split.2x1.fill") { CompareView() }
                 }
                 moreSection("Body") {
+                    MoreRow("Sleep", "moon.stars.fill") { SleepView() }
+                    MoreRow("Trends", "chart.line.uptrend.xyaxis") { TrendsView() }
                     MoreRow("Live", "waveform.path.ecg") { LiveView() }
                     MoreRow("Workouts", "figure.run") { WorkoutsView() }
-                    MoreRow("Health", "heart.text.square.fill") { HealthView() }
                     MoreRow("Lab Book", "books.vertical.fill") { LabBookView() }
                     MoreRow("Stress", "bolt.heart.fill") { StressView() }
                     MoreRow("Breathe", "wind") { BreathingView() }
@@ -301,6 +302,7 @@ struct RootTabView: View {
                     MoreRow("Rhythm", "waveform.path") { RhythmHost() }
                 }
                 moreSection("Data") {
+                    MoreRow("Devices", "badge.plus.radiowaves.right") { DevicesView() }
                     MoreRow("Your Data, Fused", "square.stack.3d.up.fill") { FusedRecordHost() }
                     MoreRow("Apple Health", "heart.fill") { AppleHealthView() }
                     MoreRow("Mi Band", "figure.walk.motion") { XiaomiBandView() }
@@ -324,7 +326,7 @@ struct RootTabView: View {
                     MoreRow("Alarms", "alarm.fill") { SmartAlarmView() }
                     MoreRow("Automations", "wand.and.stars") { AutomationsView() }
                     // The Test Centre (the diagnostics + bug-report hub) gets a first-class home here, not
-                    // just buried in Settings, so the feedback loop is one tap from the More tab.
+                    // just buried in Settings, so the feedback loop is one tap from the Sources tab.
                     MoreRow("Test Centre", "stethoscope") { TestCentreView() }
                     MoreRow("Siri & Shortcuts", "mic.fill") { SiriShortcutsSettingsView() }
                     MoreRow("Settings", "gearshape.fill") { SettingsView() }
@@ -333,7 +335,7 @@ struct RootTabView: View {
             }
             .toolbar(.hidden, for: .tabBar)   // we draw our own FloatingTabBar
         }
-        .tabItem { Label("More", systemImage: "ellipsis.circle.fill") }
+        .tabItem { Label("Sources", systemImage: "externaldrive.fill") }
     }
 
     /// One titled, COLLAPSIBLE group in the More index (S2): the app's overline (UPPERCASE) becomes a
@@ -530,7 +532,7 @@ private struct QuickActionSheet: View {
 
 // MARK: - Floating tab bar
 
-/// The signature bottom bar: two frosted "glass" islands (Today·Trends / Sleep·More) with the gold
+/// The signature bottom bar: two frosted "glass" islands (Today·Insights / Health·Sources) with the gold
 /// action button nested cleanly in the gap between them — no overlap, no glow. Real iOS 26 Liquid
 /// Glass where available, a `.ultraThinMaterial` fallback below. Replaces the hidden native tab bar.
 private struct FloatingTabBar: View {
@@ -540,9 +542,9 @@ private struct FloatingTabBar: View {
 
     private struct Item: Identifiable { let title: LocalizedStringKey; let icon: String; let tag: Int; var id: Int { tag } }
     private let nav = [Item(title: "Today", icon: "square.grid.2x2", tag: 0),
-                       Item(title: "Trends", icon: "chart.line.uptrend.xyaxis", tag: 1),
-                       Item(title: "Sleep", icon: "bed.double", tag: 2),
-                       Item(title: "More", icon: "ellipsis", tag: 3)]
+                       Item(title: "Insights", icon: "lightbulb.fill", tag: 1),
+                       Item(title: "Health", icon: "heart.text.square.fill", tag: 2),
+                       Item(title: "Sources", icon: "externaldrive.fill", tag: 3)]
 
     var body: some View {
         // One frosted glass bar, four evenly-spaced tabs. The quick-action "+" now lives in the

@@ -7,7 +7,7 @@ enum AppChangelog {
 
     /// Bump this when you add a release below. The "What's New" sheet shows automatically when the
     /// stored last-seen version is behind this. (Decoupled from the bundle version on purpose.)
-    static let currentVersion = "7.9.0"
+    static let currentVersion = "9.0.0"
 
     struct Release: Identifiable {
         let version: String
@@ -19,6 +19,18 @@ enum AppChangelog {
 
     /// Newest first.
     static let releases: [Release] = [
+        Release(
+            version: "9.0.0",
+            title: "Strand: the v5 hub redesign",
+            date: "July 2026",
+            items: [
+                "**Strand — the v5 hub redesign.** The app is now organised around four everyday hubs: Today, Insights, Health and Sources. Today stays the dashboard; Insights is the home for What Moves You, Intelligence, Coach, Explore and Compare; Health pulls together Live, Workouts, Stress, Breathe, Sleep, Trends, Lab Book and Rhythm; and Sources is the index for Devices, imports, data sources, Backup & Sync and app-level tools. The same layout reaches iOS, Mac and Android.",
+                "**iOS tab bar rebuilt.** The floating glass bar now shows Today, Insights, Health and Sources, with Sleep and Trends moved into Sources. The centre quick-action button still opens Live, Workout, Journal and Breathe.",
+                "**macOS sidebar regrouped.** The sidebar now lists the same five hub sections (Today, Insights, Health, Sources, Settings) with every destination still reachable.",
+                "**Android bottom bar regrouped.** The glass bottom bar matches iOS with Today, Insights, Health and Sources, and the Sources page groups the full destination list.",
+                "**WHOOP 5.0 / MG R22 deep data now auto-applies once per encrypted bond.** When the deep-data experiment is on, NOOP re-sends the R22 unlock sequence automatically after each secure 5/MG connect handshake, so deep sensor streams come back without tapping a button after every reconnect. The manual toggle stays available for off-wrist cases.",
+                "**And the rest.** Version 9.0.0 is a major milestone release focused on the new navigation and information architecture; it carries forward every 7.9.0 fix and improvement underneath.",
+            ]),
         Release(
             version: "7.9.0",
             title: "Coupled view, workouts rebuilt, journal numbers",

@@ -160,26 +160,27 @@ struct NavGroup: Identifiable {
     let id: String
     let items: [NavItem]
 
-    /// The 5 sidebar sections, in order, mirroring the iOS More-tab grouping idiom (Insights / Body /
-    /// Data & App) plus Today + Sleep as their own top sections. Devices/pairing sits at the TOP of the
-    /// Data & App group so the first thing a new user reaches for stays near the surface. Every one of the
-    /// 28 `NavItem` cases appears exactly once across these groups (asserted by the M5 routability test).
+    /// The 5 sidebar sections for v9.0.0 "Strand": the four everyday hubs (Today, Insights, Health,
+    /// Sources) plus a dedicated Settings section on macOS. Every `NavItem` case appears exactly once
+    /// across these groups (asserted by the M5 routability test).
     static let all: [NavGroup] = [
         NavGroup(title: "Today", id: "today", items: [.today]),
-        NavGroup(title: "Sleep", id: "sleep", items: [.sleep]),
-        NavGroup(title: "Body", id: "body", items: [
-            .workouts, .live, .health, .stress, .intervals, .breathe,
-        ]),
         // S6: the overlapping insight surfaces (Intelligence / What Moves You / Insights / Insights Hub)
         // all collapse under this single Insights group rather than scattering across the flat list.
         NavGroup(title: "Insights", id: "insights", items: [
             .intelligence, .insightsHub, .coach, .explore, .compare, .insights,
-            .labBook, .rhythm, .trends,
         ]),
-        NavGroup(title: "Data & App", id: "data_app", items: [
+        // Health absorbs sleep, body tools, vitals and the lab/rhythm readouts — the v5 Health hub.
+        NavGroup(title: "Health", id: "health", items: [
+            .sleep, .trends, .workouts, .live, .stress, .breathe, .intervals,
+            .health, .labBook, .rhythm,
+        ]),
+        // Sources is the device/import/data index: everything that is not a daily hub or app-level.
+        NavGroup(title: "Sources", id: "sources", items: [
             .devices, .dataSources, .appleHealth, .xiaomi, .backupSync, .fusedRecord,
-            .notifications, .automation, .smartAlarm, .settings, .support, .testCentre,
+            .notifications, .automation, .smartAlarm, .support, .testCentre,
         ]),
+        NavGroup(title: "Settings", id: "settings", items: [.settings]),
     ]
 
     /// The group that owns a given destination (used to auto-expand the active group on launch / route).
