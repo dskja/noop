@@ -81,8 +81,30 @@ final class MoreListParityTests: XCTestCase {
         // Today's own group is expanded.
         XCTAssertTrue(open.contains("today"))
         // Single-item groups are expanded so their lone row is visible.
-        XCTAssertTrue(open.contains("sleep"))
-        // A heavy group the user hasn't entered stays collapsed at rest.
-        XCTAssertFalse(open.contains("data_app"))
+        XCTAssertTrue(open.contains("settings"))
+        // Heavy hub groups the user hasn't entered stay collapsed at rest.
+        XCTAssertFalse(open.contains("insights"))
+        XCTAssertFalse(open.contains("health"))
+        XCTAssertFalse(open.contains("sources"))
+    }
+
+    /// Routing to an Insights, Health or Sources destination (or launching into one) must expand the
+    /// owning hub group so the selected row is visible, while unrelated heavy groups stay collapsed.
+    func testInitialExpansionExpandsRoutedHubGroups() {
+        let cases: [(NavItem, String)] = [
+            (.insightsHub, "insights"),
+            (.health, "health"),
+            (.devices, "sources"),
+            (.labBook, "health"),
+            (.fusedRecord, "sources"),
+        ]
+        for (item, groupId) in cases {
+            let open = RootView.initialExpandedGroups(for: item)
+            XCTAssertTrue(open.contains(groupId),
+                          "RootView.initialExpandedGroups(for: .\(item)) must expand group '\(groupId)'.")
+            // Singletons remain expanded for reachability.
+            XCTAssertTrue(open.contains("today"))
+            XCTAssertTrue(open.contains("settings"))
+        }
     }
 }
