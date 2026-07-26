@@ -577,9 +577,9 @@ The following is a living backlog of planned and candidate work for NOOP. It is 
 
 ### Strand / v5 hub UI & navigation
 
-- Harden iOS `FloatingTabBar` active-state for `Insights`, `Health` and `Sources`.
-- Fix Android `BottomBar` active icon state when routing through `Sources`.
-- Synchronise macOS sidebar initial expansion for `Insights`, `Health` and `Sources`.
+- ~~Harden iOS `FloatingTabBar` active-state for `Insights`, `Health` and `Sources`.~~
+- ~~Fix Android `BottomBar` active icon state when routing through `Sources`.~~
+- ~~Synchronise macOS sidebar initial expansion for `Insights`, `Health` and `Sources`.~~
 - Add compact collapsed sidebar mode on macOS.
 - Support tab bar theming synced to `Liquid Metal` time-of-day palette.
 - Implement iOS `Sources` search/filter for long destination lists.
@@ -618,7 +618,7 @@ The following is a living backlog of planned and candidate work for NOOP. It is 
 
 ### Insights tab
 
-- Ship `Coupled View` on iOS.
+- ~~Ship `Coupled View` on iOS.~~
 - Ship `Coupled View` on Android.
 - Ship `Coupled View` on macOS.
 - Add `InsightsHub` metric ranking drill-down.
@@ -1156,7 +1156,7 @@ The following is a living backlog of planned and candidate work for NOOP. It is 
 - Add marketing demo video for Strand hubs.
 - Add marketing screenshots for all three platforms.
 - Add marketing feature matrix graphic.
-- Add README Roadmap section (this section).
+- ~~Add README Roadmap section (this section).~~
 - Add README badges for build/test status.
 - Add star-history CTA.
 
