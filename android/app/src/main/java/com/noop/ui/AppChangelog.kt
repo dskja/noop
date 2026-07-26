@@ -25,7 +25,7 @@ object AppChangelog {
      * Bump this when you add a release below. The "What's New" sheet shows automatically when the
      * stored last-seen version is behind this. (Decoupled from the bundle version on purpose.)
      */
-    const val CURRENT_VERSION = "9.0.1"
+    const val CURRENT_VERSION = "9.1.0"
 
     data class Release(
         val version: String,
@@ -36,6 +36,14 @@ object AppChangelog {
 
     /** Newest first. */
     val releases: List<Release> = listOf(
+        Release(
+            version = "9.1.0",
+            title = "Coupled view on Android",
+            date = "July 2026",
+            items = listOf(
+                "**Coupled view on Android.** The optional one-glance day screen — recovery, day strain on the 0 to 21 scale, and sleep together — is now fully wired into the Android Strand shell. Add it as a card in Today’s Customise, tap through from the Today dashboard, and reach it from the in-app route. It remains optional and off by default.",
+            ),
+        ),
         Release(
             version = "9.0.1",
             title = "Strand polish: Sources parity fix",

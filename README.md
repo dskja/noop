@@ -619,7 +619,7 @@ The following is a living backlog of planned and candidate work for NOOP. It is 
 ### Insights tab
 
 - ~~Ship `Coupled View` on iOS.~~
-- Ship `Coupled View` on Android.
+- ~~Ship `Coupled View` on Android.~~
 - Ship `Coupled View` on macOS.
 - Add `InsightsHub` metric ranking drill-down.
 - Add `Activity Cost` per-activity detail screen.
