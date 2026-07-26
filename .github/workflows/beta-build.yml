@@ -1,12 +1,12 @@
-# NOOP Beta — separate CI for the Beta iOS app.
+# NOOP Beta — unified CI for the Beta iOS app.
 #
-# Two jobs:
-#   1. compile  — compile-verification on every PR/push touching Beta/ or shared code.
-#                 Unsigned, no secrets, just checks it builds.
-#   2. release  — builds an unsigned .ipa artefact on tags (v*) or manual dispatch.
-#                 The IPA is anonymized and uploaded as a workflow artefact + GitHub release asset.
+# Single job that:
+#   1. Compiles NOOPBeta on every PR/push touching Beta or shared code.
+#   2. On push to main, tag push, or manual dispatch — builds the unsigned IPA.
+#   3. If the IPA build succeeds — publishes a GitHub Beta release with the IPA.
 #
-# "Getrennt" — this workflow is completely independent of the main app-build.yml.
+# Triggers only when Beta-related files change (Beta/, shared Strand sources,
+# Packages, project.yml, or this workflow).
 name: Beta build (iOS)
 
 on:
@@ -35,9 +35,9 @@ on:
   workflow_dispatch:
     inputs:
       make_release:
-        description: 'Build IPA release artefact (not just compile check)'
+        description: 'Build IPA and create Beta release (skip on PRs)'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write
@@ -47,13 +47,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  compile:
-    name: Compile NOOPBeta
+  build:
+    name: Build & Release NOOPBeta
     runs-on: macos-15
-    if: github.event_name == 'pull_request' || github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Resolve version and release mode
+        id: meta
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF:-}" == refs/tags/beta-v* ]]; then
+            version="${GITHUB_REF_NAME#beta-v}"
+            tag="${GITHUB_REF_NAME}"
+            do_release=true
+          elif [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            version="pr"
+            tag=""
+            do_release=false
+          elif [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            version="$(sed -n 's/.*MARKETING_VERSION:[[:space:]]*"\{0,1\}\([^"]*\)"\{0,1\}.*/\1/p' project.yml | head -n 1)"
+            test -n "$version"
+            tag="beta-v${version}"
+            do_release="${{ inputs.make_release }}"
+          else
+            # push to main — auto build IPA and release
+            version="$(sed -n 's/.*MARKETING_VERSION:[[:space:]]*"\{0,1\}\([^"]*\)"\{0,1\}.*/\1/p' project.yml | head -n 1)"
+            test -n "$version"
+            tag="beta-v${version}"
+            do_release=true
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+          echo "DO_RELEASE=$do_release" >> "$GITHUB_OUTPUT"
 
       - name: Install XcodeGen
         run: brew install xcodegen
@@ -61,42 +88,16 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Build NOOPBeta
+      - name: Compile check (PR only)
+        if: steps.meta.outputs.DO_RELEASE != 'true'
         run: >-
           xcodebuild -scheme NOOPBeta -configuration Debug
           -destination 'generic/platform=iOS Simulator'
           CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
           build
 
-  release:
-    name: Build Beta IPA artefact
-    runs-on: macos-15
-    if: |
-      (github.event_name == 'workflow_dispatch' && inputs.make_release) ||
-      startsWith(github.ref, 'refs/tags/beta-v')
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Resolve version
-        run: |
-          set -euo pipefail
-          if [[ "${GITHUB_REF:-}" == refs/tags/beta-v* ]]; then
-            version="${GITHUB_REF_NAME#beta-v}"
-          else
-            version="$(sed -n 's/.*MARKETING_VERSION:[[:space:]]*"\{0,1\}\([^"]*\)"\{0,1\}.*/\1/p' project.yml | head -n 1)"
-            test -n "$version"
-          fi
-          echo "VERSION=$version" >> "$GITHUB_ENV"
-          echo "Building NOOPBeta IPA for v$version"
-
-      - name: Install XcodeGen
-        run: brew install xcodegen
-
-      - name: Generate Xcode project
-        run: xcodegen generate
-
       - name: Build unsigned Beta IPA
+        if: steps.meta.outputs.DO_RELEASE == 'true'
         run: |
           set -euo pipefail
           rm -rf build/beta-dd build/beta-stage
@@ -116,23 +117,28 @@ jobs:
           ls -lh "$GITHUB_WORKSPACE/dist/NOOPBeta-v${VERSION}-ios.ipa"
 
       - name: Upload Beta IPA artefact
+        if: steps.meta.outputs.DO_RELEASE == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: noop-beta-ipa
           path: dist/NOOPBeta-v*-ios.ipa
           if-no-files-found: error
 
-      - name: Publish GitHub release
-        if: startsWith(github.ref, 'refs/tags/beta-v')
+      - name: Publish GitHub Beta release
+        if: steps.meta.outputs.DO_RELEASE == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          tag="${GITHUB_REF_NAME}"
+          tag="${TAG}"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" dist/* --repo "$GITHUB_REPOSITORY" --clobber
+            echo "Updated existing Beta release $tag"
           else
             gh release create "$tag" dist/* --repo "$GITHUB_REPOSITORY" \
-              --target "$GITHUB_SHA" --title "NOOP Beta ${tag}" \
-              --notes "Unsigned NOOP Beta IPA for sideloading (AltStore / SideStore / Sideloadly)." --latest=false
+              --target "$GITHUB_SHA" --title "NOOP Beta v${VERSION}" \
+              --notes "Unsigned NOOP Beta IPA for sideloading (AltStore / SideStore / Sideloadly).
+
+          Built from commit ${{ github.sha }}." --latest=false --prerelease
+            echo "Created new Beta release $tag"
           fi

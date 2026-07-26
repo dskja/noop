@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import StrandAnalytics
 import WhoopStore
 
@@ -66,8 +67,6 @@ struct BetaAchievement: Identifiable {
     let color: Color
     let description: String
 }
-
-import SwiftUI
 
 enum BetaAchievements {
     /// All achievements the user has unlocked based on their data.
