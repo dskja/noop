@@ -545,20 +545,10 @@ struct HRVLabView: View {
     /// Simple bar histogram of HRV values.
     @ViewBuilder
     private func hrvHistogram(_ values: [Double]) -> some View {
-        let lo = values.min() ?? 0
-        let hi = values.max() ?? 100
-        let span = max(hi - lo, 1)
-        let bucketCount = min(8, values.count)
-        let bucketWidth = span / Double(bucketCount)
-        var buckets = Array(repeating: 0, count: bucketCount)
-        for v in values {
-            let idx = min(Int((v - lo) / bucketWidth), bucketCount - 1)
-            buckets[idx] += 1
-        }
-        let maxCount = buckets.max() ?? 1
+        let (buckets, maxCount) = computeBuckets(values)
 
         HStack(alignment: .bottom, spacing: 4) {
-            ForEach(0..<bucketCount, id: \.self) { i in
+            ForEach(0..<buckets.count, id: \.self) { i in
                 VStack(spacing: 2) {
                     Text("\(buckets[i])")
                         .font(StrandFont.caption)
@@ -572,6 +562,22 @@ struct HRVLabView: View {
         }
         .frame(height: 100, alignment: .bottom)
         .padding(.vertical, NoopMetrics.space1)
+    }
+
+    /// Compute histogram buckets for the HRV values array.
+    private func computeBuckets(_ values: [Double]) -> (buckets: [Int], maxCount: Int) {
+        guard !values.isEmpty else { return ([], 1) }
+        let lo = values.min() ?? 0
+        let hi = values.max() ?? 100
+        let span = max(hi - lo, 1)
+        let bucketCount = min(8, values.count)
+        let bucketWidth = span / Double(bucketCount)
+        var buckets = Array(repeating: 0, count: bucketCount)
+        for v in values {
+            let idx = min(Int((v - lo) / bucketWidth), bucketCount - 1)
+            buckets[idx] += 1
+        }
+        return (buckets, buckets.max() ?? 1)
     }
 
     /// Poincaré scatter plot from R-R pairs.
