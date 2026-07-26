@@ -16,7 +16,6 @@ on:
       - 'StrandiOS/**'
       - 'StrandiOSShared/**'
       - 'StrandiOSWidgets/**'
-      - 'Beta/**'
       - 'Packages/**'
       - 'project.yml'
       - '.github/workflows/app-build.yml'
@@ -27,7 +26,6 @@ on:
       - 'StrandiOS/**'
       - 'StrandiOSShared/**'
       - 'StrandiOSWidgets/**'
-      - 'Beta/**'
       - 'Packages/**'
       - 'project.yml'
       - '.github/workflows/app-build.yml'
@@ -47,8 +45,6 @@ jobs:
           - scheme: Strand
             destination: 'platform=macOS'
           - scheme: NOOPiOS
-            destination: 'generic/platform=iOS Simulator'
-          - scheme: NOOPBeta
             destination: 'generic/platform=iOS Simulator'
     steps:
       - name: Checkout
