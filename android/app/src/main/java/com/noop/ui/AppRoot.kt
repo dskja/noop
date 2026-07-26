@@ -220,6 +220,16 @@ private val drawerGroups: List<DrawerGroup> = listOf(
     ), defaultExpanded = false),
 )
 
+// All destinations that are reachable through the Sources tab's grouped index (plus the
+// Sources index page itself). The three primary hub destinations have their own bar slots,
+// so they are excluded here even though they appear inside the Sources list.
+private val sourcesDestinations: Set<Destination> = buildSet {
+    add(Destination.More)
+    drawerGroups.forEach { addAll(it.items) }
+    remove(Destination.InsightsHub)
+    remove(Destination.Health)
+}
+
 /** The headers open by default at first run, derived from [drawerGroups.defaultExpanded] (Insights +
  *  Body), so the seed lives in one place and the persistence default can't drift from the UI default. */
 private fun defaultExpandedHeaders(): Set<String> =
@@ -730,19 +740,29 @@ private fun GlassBottomBar(
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 barLeadingTabs.forEach { tab ->
+                    val active = when (tab.dest) {
+                        Destination.Today -> current == Destination.Today || current == Destination.CoupledView
+                        Destination.InsightsHub -> current == Destination.InsightsHub
+                        else -> current == tab.dest
+                    }
                     BarSlot(
                         icon = tab.icon,
                         label = stringResource(tab.labelRes),
-                        active = current == tab.dest,
+                        active = active,
                         modifier = Modifier.weight(1f),
                         onClick = { onTabSelected(tab.dest) },
                     )
                 }
                 barTrailingTabs.forEach { tab ->
+                    // Health stays active for its own hub plus direct drill-ins from Today or Health
+                    // (hydration tracking and vital-detail screens are not part of the Sources index).
+                    val active = current == tab.dest ||
+                        current == Destination.Hydration ||
+                        current == Destination.VitalSignsDetail
                     BarSlot(
                         icon = tab.icon,
                         label = stringResource(tab.labelRes),
-                        active = current == tab.dest,
+                        active = active,
                         modifier = Modifier.weight(1f),
                         onClick = { onTabSelected(tab.dest) },
                     )
@@ -750,11 +770,10 @@ private fun GlassBottomBar(
                 BarSlot(
                     icon = Icons.Filled.Storage,
                     label = stringResource(R.string.nav_sources),
-                    // Selected on the Sources page itself, and also kept lit whenever the current screen is
-                    // one reached THROUGH Sources (i.e. not one of the bar's own three tabs) — so drilling
-                    // into any grouped destination still reads as "you're in Sources", never "nowhere".
-                    active = current != Destination.Today && current != Destination.InsightsHub &&
-                        current != Destination.Health,
+                    // Selected on the Sources index page and for every destination actually grouped
+                    // inside Sources. Detail screens that live outside the Sources index fall back to
+                    // their owning hub (Today/Insights/Health) instead of lighting Sources.
+                    active = current in sourcesDestinations,
                     modifier = Modifier.weight(1f),
                     onClick = { onTabSelected(Destination.More) },
                 )
