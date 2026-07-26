@@ -31,6 +31,8 @@ enum NavItem: String, CaseIterable, Identifiable, Hashable {
     case settings = "Settings"
     case support = "Support"
     case testCentre = "Test Centre"
+    case recoveryLab = "Recovery Lab"
+    case hrvLab = "HRV Lab"
 
     var id: String { rawValue }
 
@@ -70,6 +72,8 @@ enum NavItem: String, CaseIterable, Identifiable, Hashable {
         case .settings: return "Settings"
         case .support: return "Support"
         case .testCentre: return "Test Centre"
+        case .recoveryLab: return "Recovery Lab"
+        case .hrvLab: return "HRV Lab"
         }
     }
 
@@ -111,6 +115,8 @@ enum NavItem: String, CaseIterable, Identifiable, Hashable {
         case .settings: return String(localized: "Settings")
         case .support: return String(localized: "Support")
         case .testCentre: return String(localized: "Test Centre")
+        case .recoveryLab: return String(localized: "Recovery Lab")
+        case .hrvLab: return String(localized: "HRV Lab")
         }
     }
 
@@ -145,6 +151,8 @@ enum NavItem: String, CaseIterable, Identifiable, Hashable {
         case .settings: return "gearshape.fill"
         case .support: return "heart.fill"
         case .testCentre: return "stethoscope"
+        case .recoveryLab: return "heart.text.square.fill"
+        case .hrvLab: return "waveform.path.ecg"
         }
     }
 }
@@ -173,7 +181,7 @@ struct NavGroup: Identifiable {
         // Health absorbs sleep, body tools, vitals and the lab/rhythm readouts — the v5 Health hub.
         NavGroup(title: "Health", id: "health", items: [
             .sleep, .trends, .workouts, .live, .stress, .breathe, .intervals,
-            .health, .labBook, .rhythm,
+            .health, .labBook, .rhythm, .recoveryLab, .hrvLab,
         ]),
         // Sources is the device/import/data index: everything that is not a daily hub or app-level.
         NavGroup(title: "Sources", id: "sources", items: [
@@ -446,6 +454,8 @@ struct RootView: View {
         case .settings: settingsDetail
         case .support: SupportView()
         case .testCentre: TestCentreView()
+        case .recoveryLab: RecoveryLabView()
+        case .hrvLab: HRVLabView()
         }
     }
 

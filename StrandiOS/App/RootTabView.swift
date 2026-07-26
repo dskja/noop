@@ -310,6 +310,8 @@ struct RootTabView: View {
                     MoreRow("Live", "waveform.path.ecg") { LiveView() }
                     MoreRow("Workouts", "figure.run") { WorkoutsView() }
                     MoreRow("Lab Book", "books.vertical.fill") { LabBookView() }
+                    MoreRow("Recovery Lab", "heart.text.square.fill") { RecoveryLabView() }
+                    MoreRow("HRV Lab", "waveform.path.ecg") { HRVLabView() }
                     MoreRow("Stress", "gauge.with.dots.needle.50percent") { StressView() }
                     MoreRow("Breathe", "lungs.fill") { BreathingView() }
                     MoreRow("Intervals", "timer") { IntervalTimerView() }
