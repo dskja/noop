@@ -154,6 +154,7 @@ from **their own device**, on a machine **they** control.
 - [Support (optional)](#support-optional)
 - [Disclaimer](#disclaimer)
 - [License](#license)
+- [Roadmap](#roadmap)
 - [Docs](#docs)
 
 ---
@@ -569,6 +570,618 @@ That's it — copy away.
 - [`project.yml`](project.yml) — XcodeGen project definition (source of `Strand.xcodeproj`).
 
 ---
+
+## Roadmap
+
+The following is a living backlog of planned and candidate work for NOOP. It is intentionally broad: short-term polish, mid-term feature parity across iPhone, Mac and Android, longer-term protocol expansion for WHOOP 5.0/MG, and ongoing analytical and infrastructure work. Items are grouped by domain; the order within a section is not a strict priority order. Checked items are those already merged; most remain open research, implementation, or QA tasks.
+
+### Strand / v5 hub UI & navigation
+
+- Harden iOS `FloatingTabBar` active-state for `Insights`, `Health` and `Sources`.
+- Fix Android `BottomBar` active icon state when routing through `Sources`.
+- Synchronise macOS sidebar initial expansion for `Insights`, `Health` and `Sources`.
+- Add compact collapsed sidebar mode on macOS.
+- Support tab bar theming synced to `Liquid Metal` time-of-day palette.
+- Implement iOS `Sources` search/filter for long destination lists.
+- Implement Android `Sources` search/filter for long destination lists.
+- Add macOS sidebar pinning for favourite destinations.
+- Add iOS `Sources` recent-items row.
+- Add Android `Sources` recent-items row.
+- Animate `Sources` group expand/collapse on all three platforms.
+- Add haptic feedback to iOS tab selection.
+- Add haptic feedback to Android tab selection.
+- Unify empty-state illustrations across the three shells.
+- Add per-platform onboarding hints for the new hub model.
+- Re-evaluate `Settings` placement on iOS vs macOS vs Android for parity.
+- Add `Sources` drag-to-reorder for user favourites (local preference).
+- Add `Sources` badge counts for un-synced data / errors.
+- Ensure `Back` gesture on Android always returns to the correct hub root.
+- Reconcile `NavGroup` IDs with `MoreSectionPrefs` keys for stable persistence.
+
+### Today tab
+
+- Add `RecoveryForecast` evening card to Today.
+- Show `IllnessSignal` "Heads-Up" card when raised.
+- Add `DaytimeStress` hourly sparkline card.
+- Add configurable Today card reordering.
+- Add Today "good morning" synthesis with sleep + recovery narrative.
+- Add live battery tile with charging state.
+- Show last-sync timestamp with "stale" warning.
+- Add today's `HydrationGoalEngine` progress tile.
+- Add `StepsEstimateEngine` daily steps tile on iOS.
+- Add `StepsEstimateEngine` daily steps tile on Android.
+- Add `StepsEstimateEngine` daily steps tile on macOS.
+- Add weight entry shortcut on Today.
+- Add body-temperature trend tile.
+- Add `WeeklyDigest` preview card on Today.
+- Add "what changed since yesterday" micro-insight.
+
+### Insights tab
+
+- Ship `Coupled View` on iOS.
+- Ship `Coupled View` on Android.
+- Ship `Coupled View` on macOS.
+- Add `InsightsHub` metric ranking drill-down.
+- Add `Activity Cost` per-activity detail screen.
+- Add lagged correlation selector (0–7 days) in `Compare`.
+- Add `Compare` saved preset pairs.
+- Add `Compare` annotations for events/workouts/journal.
+- Add `Explore` anomaly highlight bands.
+- Add `Explore` baseline overlay.
+- Add `Explore` calendar heat-strip view.
+- Add `Coach` follow-up suggestion chips.
+- Add `Coach` prompt templates.
+- Add `Insights` shareable image export.
+- Add `Compare` shareable image export.
+- Add `Explore` full-screen landscape chart on iPad.
+- Add `Explore` full-screen landscape chart on Android tablets.
+- Add `Explore` metric explorer search.
+- Add `Insights` "since last change" narrative.
+
+### Health tab
+
+- Add `FitnessAge` card with confidence gate.
+- Add `Vitality` / `Body Age` card.
+- Add `VitalBands` personal-baseline band UI.
+- Add `HRVFreqDomain` LF/HF chart card.
+- Add `SpotHrvReading` on-demand spot HRV card.
+- Add `StressIndex` Baevsky SI tile.
+- Add `DaytimeStress` hourly heatmap.
+- Add `StressOnsetDetector` guided-breath cue card.
+- Add `SedentaryDetector` daily inactivity summary.
+- Add `RhythmScreener` beat-regularity tile.
+- Add `Workouts` list filter by sport/source.
+- Add `Workouts` list merge/split actions.
+- Add `Workouts` detail HR zone chart.
+- Add `Workouts` detail calories methodology note.
+- Add `Sleep` per-night notes/tags.
+- Add `Sleep` manual edit with undo.
+- Add `Sleep` deep-timeline sleep/workout markers.
+- Add `Trends` shareable one-page PDF report.
+- Add `Trends` compare multiple metrics overlay.
+- Add `Trends` baseline confidence ribbons.
+- Add `Live` full-screen heart-rate view.
+- Add `Live` RR-interval tachogram.
+- Add `Live` real-time HRV during session.
+- Add `Breathe` session outcome pre/post comparison.
+- Add `Breathe` custom inhale/exhale ratios.
+- Add `Intervals` saved templates.
+- Add `Lab Book` marker timeline in Health.
+- Add `Rhythm` circadian phase estimate card.
+
+### Sources tab
+
+- Add `WHOOP CSV` import progress with ETA.
+- Add `Apple Health export` streaming import progress.
+- Add `Nutrition CSV` importer (Cronometer / MacroFactor) on iOS.
+- Add `Nutrition CSV` importer (Cronometer / MacroFactor) on Android.
+- Add `Oura` live ring import status.
+- Add `Garmin` FIT/TCX import on iOS.
+- Add `Garmin` FIT/TCX import on Android.
+- Add `Xiaomi / Huami` QR-pair flow.
+- Add `Backup & Sync` manual backup card.
+- Add `Backup & Sync` auto background backup iOS.
+- Add `Backup & Sync` auto background backup Android.
+- Add `Backup & Sync` restore with conflict preview.
+- Add `Data Sources` last-import per-source status.
+- Add `Devices` battery history per strap.
+- Add `Devices` rename strap (WHOOP 4.0 only).
+- Add `Devices` firmware version history.
+- Add `Devices` trusted/untrusted state.
+- Add `Notifications` per-destination toggles.
+- Add `Automations` Shortcuts list on iOS.
+- Add `Smart Alarm` next-instance preview.
+- Add `Test Centre` shortcut tile for active captures.
+
+### Settings & app-wide
+
+- Add profile waist-circumference field for `FitnessAge`.
+- Add profile birth-sex field for analytics.
+- Add profile max-HR override per sport.
+- Add `What's new` changelog modal for new installs.
+- Add settings export/import for all preferences.
+- Add settings reset to defaults.
+- Add opt-in crash/error log capture (local only).
+- Add in-app language override.
+- Add unit system preview in settings.
+- Add display-mode dark/light/auto per platform.
+- Add accessibility large-text support audit on iOS.
+- Add accessibility large-text support audit on Android.
+- Add VoiceOver labels for all chart elements on iOS.
+- Add TalkBack labels for all chart elements on Android.
+- Add keyboard navigation audit on macOS.
+- Add haptics intensity setting.
+- Add notification quiet-hours UI.
+- Add experimental-feature gate list.
+- Add debug-strap-log export from settings.
+- Add privacy data-deletion confirmation flow.
+
+### WHOOP 4.0 BLE
+
+- Harden `MarginalRadioDetector` fallback to 0x2A37.
+- Improve `PostBondTimeoutLoopDetector` re-pair messaging.
+- Validate `EmptySyncTracker` clock-lost banner thresholds.
+- Add `BackfillContinuation` progress UI.
+- Add `RawOutbox` size quota warnings.
+- Add `RawOutbox` manual prune action.
+- Add `PuffinFrameRecorder` opt-in toggle on 4.0.
+- Improve `Commands.swift` safe-command validation.
+- Add `WhoopModel` auto-detection confidence score.
+- Add strap LED identification command (if safe).
+- Add `BATTERY_LEVEL` event low-battery local notification.
+- Add `WRIST_ON` / `WRIST_OFF` automation triggers.
+- Add `DOUBLE_TAP` action configuration on 4.0.
+- Add `STRAP_DRIVEN_ALARM` set/get UI.
+- Add `HAPTICS_FIRED` event log viewer.
+- Improve historical offload ETA for 14-day backfill.
+- Add `GET_CLOCK` drift alert UI.
+- Add `SET_CLOCK` timezone/daylight-saving handling.
+- Validate `SEND_R10_R11_REALTIME` raw-stream gating.
+- Add live `REALTIME_RAW_DATA` type-43 visualiser.
+
+### WHOOP 5.0 / MG BLE
+
+- Decode `v18` historical full-sensor records reliably.
+- Decode `v25` historical full-sensor records reliably.
+- Decode `v26` 24 Hz PPG optical waveforms.
+- Derive HR from `v26` PPG via autocorrelation (see `PpgHr.swift`).
+- Integrate `v18` sleep-state byte into `SleepStager`.
+- Integrate `v18` step counter + activity class into `StepsEstimateEngine`.
+- Decode `fd4b0007` diagnostics channel.
+- Harden `CLIENT_HELLO` bond handshake for reconnects.
+- Add `R22` deep-data re-arm on every encrypted connect.
+- Add `R22` deep-data status indicator in Live.
+- Add `noopWhoop5DeepData` experiment gate.
+- Add `noopContinuousHrv` live dense HR streaming.
+- Add `noopContinuousHrvOvernightOnly` window gate.
+- Add `noopBroadcastHr` advertising enable/disable.
+- Add `noopPuffinExperiments` probe result viewer.
+- Map puffin types 53/54/55/56 to canonical events.
+- Add `METADATA` `HISTORY_COMPLETE` handling robustness.
+- Add `PUFFIN_COMMAND/RESPONSE` type 37/38 decode.
+- Add `RELATIVE_PUFFIN_EVENTS` handling.
+- Add `WHOOP MG` ECG single-lead 250 Hz capture path.
+- Add `WHOOP MG` pulse-arrival-time (PAT) blood-pressure estimate.
+- Add `WHOOP 5` / `MG` rename capability if discovered.
+- Add `WHOOP 5` battery pack console log decoding.
+- Add `WHOOP 5` extended battery info tile.
+- Add `WHOOP 5` memfault diagnostic log viewer.
+- Add `WHOOP 5` raw IMU stream decoding (type 51).
+- Add `WHOOP 5` historical IMU stream decoding (type 52).
+- Validate `ContinuousHrvSchedule` quiet-hour windows.
+- Harden `Whoop5EmptyOffloadTracker` messaging.
+
+### Protocol decoding & `WhoopProtocol`
+
+- Add schema-driven decode for new historical layout `v27+`.
+- Add CRC validation fail-fast diagnostics.
+- Add frame reassembly timeout logging.
+- Add `whoop_protocol.json` schema validation CI test.
+- Add unit tests for `Framing.swift` CRC8/CRC16/CRC32.
+- Add unit tests for `Reassembler` fragmentation edge cases.
+- Add unit tests for `Interpreter` family-aware offsets.
+- Add unit tests for `Streams` skin-temperature conversion.
+- Add unit tests for `HistoricalStreams` clock correction.
+- Add unit tests for `PpgHr` autocorrelation on synthetic waveforms.
+- Add unit tests for `Whoop5Config` R22 flag payload builder.
+- Add property-based fuzz tests for frame parser.
+- Document packet type 53/54 in `docs/PROTOCOL.md`.
+- Document packet type 55/56 in `docs/PROTOCOL.md`.
+- Document `v26` PPG layout in `docs/PROTOCOL.md`.
+- Add protocol-change diff template for new firmware dumps.
+- Add `fd4b0007` diagnostics format notes.
+- Add `CLIENT_HELLO` variants per firmware.
+- Add `PuffinExperiment` registry version field.
+- Add protocol probe result upload helper (local file only).
+
+### Persistence & `WhoopStore`
+
+- Add schema migration smoke tests.
+- Add `DatabaseIntegrity` quick-check CI step.
+- Add `quarantineIncompatibleDatabase` recovery UI.
+- Add `RawOutbox` size ceiling UI warning.
+- Add `RawOutbox` one-tap prune to settings.
+- Add `StreamStore` batch insert benchmarks.
+- Add `Reads` `hrBuckets` downsampling tests.
+- Add `Cursors` highwater reset safeguards.
+- Add `MetricsCache` sleep-edit preservation tests.
+- Add `LabMarkerStore` projection verification tests.
+- Add `BackupSettings` round-trip tests.
+- Add `TimestampHeal` idempotency tests.
+- Add `SleepSessionDedup` overlap edge-case tests.
+- Add `DismissedSleepSpans` tombstone cap handling.
+- Add `DeviceRegistryStore` active-device invariant tests.
+- Add `LiveSessionStore` recent-list query tests.
+- Add `JournalWorkoutAppleCache` delete-and-rebuild tests.
+- Add `MetricSeriesStore` range-read performance tests.
+- Add `BackupSync` encrypted backup option.
+- Add `BackupSync` per-device backup key.
+
+### Sleep analytics (`StrandAnalytics`)
+
+- Ship `SleepStagerV2` opt-in behind experiment gate.
+- Validate `SleepStagerV2` on multi-subject nights.
+- Add `SleepStager` nap vs main-sleep confidence.
+- Improve `SleepStager` off-wrist backstop.
+- Add `SleepStager` sparse-gravity bridge tuning.
+- Add `SleepStager` REM-funnel diagnostic UI.
+- Add `SleepStageTotals` learned-timing visualisation.
+- Add `SleepWindowReclip` edit preview.
+- Add `SleepDebt` cumulative chart.
+- Add `SleepEditGuard` edit conflict resolution UI.
+- Add `SleepReadout` HR-density chart.
+- Add `SleepReadout` gravity-coverage chart.
+- Add `AnalyticsEngine` per-session stage encoding tests.
+- Add `SleepStager` daytime false-sleep guard tuning.
+- Add `SleepStager` morning stillness guard rescue.
+- Add `SleepStager` cold-start first-night handling.
+- Add `SleepStager` multi-night baseline for habitual midsleep.
+- Add `SleepStager` respiration regularity feature for REM.
+- Add `SleepStager` HRV-derived sleep-onset marker.
+- Add `SleepStager` HRV-derived wake marker.
+- Add `SleepStager` calibration from user edits.
+- Add `SleepStager` export/import of staging model.
+- Add `SleepStager` side-by-side V1/V2 comparison.
+- Add `SleepStager` confidence band per epoch.
+- Add `SleepStager` wake-after-sleep-onset (WASO) drill-down.
+
+### Recovery, strain & readiness (`StrandAnalytics`)
+
+- Add `RecoveryScorer` per-term contribution chart.
+- Add `RecoveryScorer` cold-start n-of-nights gate UI.
+- Add `RecoveryForecast` evening card to Today.
+- Add `RecoveryForecast` confidence band display.
+- Add `ChargeDrivers` ordered list screen.
+- Add `ReadinessEngine` per-signal flags UI.
+- Add `ReadinessEngine` training-load balance chart.
+- Add `StrainScorer` workout vs non-workout strain split.
+- Add `StrainScorer` Banister vs Edwards toggle.
+- Add `WorkoutDetector` sport classification from motion.
+- Add `WorkoutDetector` GPS-less distance estimate.
+- Add `WorkoutCalories` activity MET override.
+- Add `WorkoutDetector` indoor vs outdoor hints.
+- Add `WorkoutDetector` cooldown detection.
+- Add `WorkoutDetector` merge candidate preview.
+- Add `WatchRecovery` Apple Watch daily recovery card.
+- Add `WatchRecovery` min-baseline explanation.
+- Add `ScoreConfidence` downgrade explanation UI.
+- Add `ScoreConfidence` H9 low-restorative check tests.
+- Add `HRZones` manual zone overrides.
+
+### HRV & vitals (`StrandAnalytics`)
+
+- Add `HRVAnalyzer` cleaning trace viewer in Test Centre.
+- Add `HRVAnalyzer` rolling RMSSD live chart.
+- Add `HRVFreqDomain` LF/HF chart with span gates.
+- Add `HRVFreqDomain` total power trend.
+- Add `SpotHrvReading` UI for on-demand spot HRV.
+- Add `SpotHrvReading` source caveat (optical vs chest strap).
+- Add `SpotHrvReading` guided 1-minute measurement.
+- Add continuous HRV from `v26` PPG HR.
+- Add continuous HRV from dense type-40 live stream.
+- Add `HRVAnalyzer` pNN50 tile.
+- Add `HRVAnalyzer` SDNN trend tile.
+- Add `HRVAnalyzer` meanNN trend tile.
+- Add `HRVAnalyzer` ectopic fraction trend.
+- Add `HRVAnalyzer` range-reject diagnostic.
+- Add `HRVAnalyzer` Malik ectopic review.
+- Add `HRVAnalyzer` min-beats gate explanation.
+- Add `VitalBands` personal-baseline per vital.
+- Add `VitalBands` population fallback note.
+- Add `VitalBands` skin-temp mixed-semantics explanation.
+- Add `VitalBands` SpO₂ population-only caveat.
+
+### Health metrics (`StrandAnalytics`)
+
+- Add `FitnessAgeEngine` result screen with confidence.
+- Add `FitnessAgeEngine` waist-input gate.
+- Add `FitnessAgeEngine` activity-index detail.
+- Add `FitnessAgeEngine` VO₂max estimate display.
+- Add `VitalityEngine` vitality score card.
+- Add `VitalityEngine` body-age delta card.
+- Add `VitalityEngine` input factor breakdown.
+- Add `IllnessSignalEngine` Heads-Up card.
+- Add `IllnessSignalEngine` confounder input tags.
+- Add `IllnessDistance` Mahalanobis alternative view.
+- Add `StressIndex` Baevsky SI chart.
+- Add `DaytimeStress` hourly bar chart.
+- Add `StressOnsetDetector` JITAI cue settings.
+- Add `StressOnsetDetector` edge-trigger log.
+- Add `SedentaryDetector` daily sedentary minutes tile.
+- Add `SedentaryDetector` move reminder settings.
+- Add `HydrationGoalEngine` daily goal card.
+- Add `HydrationGoalEngine` climate/activity adjustment note.
+- Add `StepsEstimateEngine` calibration UI.
+- Add `StepsEstimateEngine` confidence tier display.
+- Add `StepsEstimateEngine` WHOOP 5 raw counter path.
+- Add `CircadianEngine` body-clock phase card.
+- Add `CircadianEngine` jet-lag plan preview.
+
+### Behaviour, insights & correlation (`StrandAnalytics`)
+
+- Add `BehaviorInsights` narrative card on Today.
+- Add `CorrelationEngine` two-metric scatter chart.
+- Add `CorrelationEngine` lagged correlation selector.
+- Add `CorrelationEngine` significance threshold note.
+- Add `CorrelationEngine` saved correlations list.
+- Add `DoseResponseEngine` dose-response curve UI.
+- Add `FusionEngine` multi-sensor signal fusion UI.
+- Add `WeeklyDigest` Monday-anchored week review screen.
+- Add `WeeklyDigest` balance read (overreaching/underloaded).
+- Add `WeeklyDigest` focal-point sentence cards.
+- Add `WeeklyDigest` week-over-week comparison chart.
+- Add `ActivityInsights` per-activity recovery impact list.
+- Add `BehaviorInsights` tag-based journal correlation.
+- Add `CorrelationEngine` outlier exclusion toggle.
+- Add `CorrelationEngine` baseline-adjusted correlation.
+- Add `WeeklyDigest` shareable summary image.
+- Add `WeeklyDigest` Monday notification.
+- Add `BehaviorInsights` trend-change detection.
+- Add `ActivityCost` per-activity average strain.
+- Add `ActivityCost` recovery half-life estimate.
+
+### Data import & sources
+
+- Add WHOOP CSV `physiological_cycles.csv` import tests.
+- Add WHOOP CSV `sleeps.csv` import tests.
+- Add WHOOP CSV `workouts.csv` import tests.
+- Add WHOOP CSV `journal_entries.csv` import tests.
+- Add Apple Health `export.xml` streaming tests.
+- Add Apple Health sleep-stage mapping tests.
+- Add Nutrition CSV Cronometer importer.
+- Add Nutrition CSV MacroFactor importer.
+- Add Oura live ring auth challenge flow.
+- Add Oura API token-less historical dump import.
+- Add Garmin FIT parser for HR/R-R.
+- Add Garmin TCX parser for workouts.
+- Add Xiaomi/Huami custom service discovery.
+- Add Polar/Wahoo/Coospo standard HR source UI.
+- Add FTMS treadmill source tile.
+- Add FTMS bike source tile.
+- Add FTMS rower source tile.
+- Add FTMS cross-trainer source tile.
+- Add `HrBroadcaster` re-broadcast toggle.
+- Add `SourceCoordinator` multi-device switcher.
+
+### watchOS & Apple Watch
+
+- Add watchOS complication for recovery ring.
+- Add watchOS complication for live HR.
+- Add watchOS app `NOOPWatchApp.swift` standalone status.
+- Add watchOS manual sleep start/end action.
+- Add watchOS haptic breathe session.
+- Add watchOS interval timer.
+- Add Apple Watch live-HR fallback source.
+- Add Apple Watch `WatchRecovery` daily sync.
+- Add watchOS battery tile.
+- Add watchOS last-sync tile.
+
+### Widgets & Live Activities
+
+- Add iOS small Today widget.
+- Add iOS medium Today widget.
+- Add iOS large Today widget.
+- Add iOS live activity for active workout.
+- Add iOS live activity for live HR.
+- Add iOS live activity for breathe session.
+- Add iOS Lock Screen widget for live HR.
+- Add iOS StandBy widget for recovery.
+- Add Android Today widget 1x1.
+- Add Android Today widget 2x1.
+- Add Android Today widget 4x1.
+- Add Android 14+ live update widget for live HR.
+- Add Android glanceable tile for recovery.
+- Add macOS Notification Center Today widget.
+- Add macOS menu bar live HR popover graph.
+- Add widget snapshot refresh on sync completion.
+- Add widget configuration intents.
+- Add widget per-metric selection.
+- Add widget dark/light palette.
+- Add widget preview assets.
+
+### iOS-specific
+
+- Add iOS onboarding `What's new` modal.
+- Add iOS HealthKit write opt-in flow.
+- Add iOS `Export for Shortcuts` intent expansion.
+- Add iOS Shortcuts `Get today's recovery` action.
+- Add iOS Shortcuts `Get last workout` action.
+- Add iOS background-refresh for live HR.
+- Add iOS background fetch for strap history.
+- Add iOS local notification delivery for smart alarm.
+- Add iOS App Intents for `Live`, `Breathe`, `Intervals`.
+- Add iOS critical battery notification.
+- Add iOS `Live Activity` start from Control Centre.
+- Add iOS iPad sidebar layout.
+- Add iOS iPad multi-column `Insights` layout.
+- Add iOS accessibility dynamic type audit.
+- Add iOS TestFlight/F-Droid-style distribution notes.
+- Add iOS free signing identity limitations doc.
+- Add iOS AltStore source auto-update test.
+- Add iOS `.ipa` re-sign helper script.
+- Add iOS beta crash log capture (opt-in).
+- Add iOS in-app review request (never intrusive).
+
+### Android-specific
+
+- Add Android onboarding `What's new` modal.
+- Add Android Health Connect write support.
+- Add Android Health Connect read support.
+- Add Android background sync for strap history.
+- Add Android foreground service for live HR.
+- Add Android notification channel for strap status.
+- Add Android local notification for smart alarm.
+- Add Android app shortcuts for `Live`, `Breathe`.
+- Add Android Wear OS companion tile.
+- Add Android tablet two-pane layout.
+- Add Android dynamic colour theme support.
+- Add Android per-app language override.
+- Add Android backup/restore with encrypted `.noopbak`.
+- Add Android APK signature reproducibility notes.
+- Add Android Gradle build cache in CI.
+- Add Android lint baseline cleanup.
+- Add Android unit-test coverage report.
+- Add Android screenshot tests for Compose.
+- Add Android baseline profile for startup.
+- Add Android edge-to-edge layout audit.
+
+### macOS-specific
+
+- Add macOS menu bar heart-rate graph.
+- Add macOS menu bar recovery badge.
+- Add macOS keyboard shortcuts for all tabs.
+- Add macOS `Command + N` new window.
+- Add macOS multiple window support.
+- Add macOS Touch Bar controls for `Live`/`Breathe`.
+- Add macOS automation Shortcuts actions list.
+- Add macOS ` Automations` double-tap action picker.
+- Add macOS inactivity reminder menu bar toggle.
+- Add macOS smart alarm menu bar countdown.
+- Add macOS quick-settings dropdown.
+- Add macOS status bar sync spinner.
+- Add macOS full-screen `Live` view.
+- Add macOS `Today` widget for Notification Center.
+- Add macOS `Support` screen with system info copy.
+- Add macOS `Privacy` permission diagnostics.
+- Add macOS notarization-free first-launch FAQ.
+- Add macOS homebrew cask formula.
+- Add macOS disk-image (.dmg) release artifact.
+- Add macOS auto-update Sparkle-style check.
+
+### AI Coach
+
+- Add `AICoach` local model endpoint support.
+- Add `AICoach` prompt template library.
+- Add `AICoach` follow-up context limit display.
+- Add `AICoach` per-question metric attachment picker.
+- Add `AICoach` suggested questions from current trends.
+- Add `AICoach` plain-language insight summaries.
+- Add `AICoach` privacy note before first use.
+- Add `AICoach` token usage estimate.
+- Add `AICoach` response share action.
+- Add `AICoach` model-list refresh race fix.
+- Add `AICoach` local/remote endpoint toggle.
+- Add `AIProvider` error retry with backoff.
+- Add `AIProvider` streaming response UI.
+- Add `AICoach` markdown rendering for answers.
+- Add `AICoach` source citation for cited metrics.
+- Add `AICoach` multi-turn conversation history.
+- Add `AICoach` delete conversation.
+- Add `AICoach` export conversation (local file).
+- Add `AICoach` prompt-injection mitigation review.
+- Add `AICoach` rate-limit UI.
+
+### Test Centre & diagnostics
+
+- Add `TestModeRegistry` per-mode description screen.
+- Add `TestCentreLayout` priority ordering tests.
+- Add `UniversalTrace` clock-drift chart.
+- Add `Spo2ReTrace` raw PPG hex export.
+- Add `ConnectionTrace` reconnect cycle log.
+- Add `BatteryTrace` per-cycle voltage trend.
+- Add `SleepTrace` staging gate verdict list.
+- Add `HRVTrace` cleaning step breakdown.
+- Add `StepsTrace` calibration ratio scatter.
+- Add `RawFrameRecorder` start/stop UI.
+- Add `TestCentre` export log zip.
+- Add `TestCentre` per-domain GitHub label helper.
+- Add `TestCentre` capture countdown UI.
+- Add `TestCentre` guided capture questionnaire.
+- Add `TestCentre` battery test mode.
+- Add `TestCentre` recovery test mode.
+- Add `TestCentre` hrv test mode.
+- Add `TestCentre` steps test mode.
+- Add `TestCentre` data-import test mode.
+- Add `TestCentre` display test mode.
+
+### CI, build & release
+
+- Add CI job for `swift test` in each package.
+- Add CI job for `xcodebuild test` on macOS app.
+- Add CI job for Android unit tests.
+- Add CI job for Android lint.
+- Add CI job for `CHANGELOG.md` / `AppChangelog` parity.
+- Add CI job for `altstore-source.json` schema validation.
+- Add CI job for release-notes file existence.
+- Add CI build cache for XcodeGen derived data.
+- Add CI build cache for Gradle.
+- Add CI Apple signing with ephemeral certs.
+- Add CI reproducible `.apk` signing.
+- Add CI automatic AltStore source update.
+- Add CI automatic docs release-notes copy.
+- Add CI Slack/Discord release notification.
+- Add CI nightly `main` smoke build.
+- Add CI dependency vulnerability scan (SCA).
+- Add CI license header check.
+- Add CI markdown link check.
+- Add CI secrets scanning.
+- Add CI static analysis for Swift (SwiftLint/SwiftFormat).
+
+### Documentation & marketing
+
+- Update `docs/ARCHITECTURE.md` with v5 hub diagram.
+- Update `docs/PROTOCOL.md` with 5.0/MG packet types.
+- Update `docs/BLE_REVERSE_ENGINEERING.md` with v26 notes.
+- Update `docs/IOS.md` with AltStore/source instructions.
+- Update `docs/ANDROID.md` with sideload/Health Connect notes.
+- Update `docs/ANALYTICS.md` with every analyzer formula.
+- Update `docs/FAQ.md` with 5/MG pairing FAQ.
+- Add `docs/WATCHOS.md` setup guide.
+- Add `docs/WIDGETS.md` platform widget guide.
+- Add `docs/COACH.md` AI Coach privacy/setup guide.
+- Add `docs/PRIVACY_SECURITY.md` data-flow diagram.
+- Add `docs/CONTRIBUTING.md` issue/PR template guide.
+- Add `docs/releases/v9.1.0.md` draft.
+- Add `docs/releases/v9.2.0.md` draft.
+- Add marketing demo video for Strand hubs.
+- Add marketing screenshots for all three platforms.
+- Add marketing feature matrix graphic.
+- Add README Roadmap section (this section).
+- Add README badges for build/test status.
+- Add star-history CTA.
+
+### Community, legal & governance
+
+- Add `CODE_OF_CONDUCT.md` enforcement contact.
+- Add `SECURITY.md` vulnerability reporting process.
+- Add `SUPPORT.md` tiered support expectations.
+- Add `CONTRIBUTING.md` translation guide.
+- Add `CONTRIBUTING.md` analytics parity checklist.
+- Add `CONTRIBUTING.md` BLE protocol documentation checklist.
+- Add issue templates for bug/ feature/ protocol.
+- Add PR template with test/release checklist.
+- Add stale issue bot with protocol-research exempt label.
+- Add GitHub Discussions for Q&A.
+- Add Discord webhook for releases.
+- Add Reddit release post template.
+- Add mastodon/Bluesky release post template.
+- Add project governance note (maintainer + core contributors).
+- Add trademark use guidelines for "NOOP" / "WHOOP".
+- Add license compatibility matrix for dependencies.
+- Add archive request process note.
+- Add donation/support link (GitHub Sponsors / Ko-fi).
+- Add contributor hall of fame.
+- Add no-cloud privacy pledge in README.
 
 ## Activity
 
