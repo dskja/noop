@@ -248,10 +248,11 @@ struct RecoveryLabView: View {
         let scale = max(deltas.map { abs($0) }.max() ?? 1, 1)
         GeometryReader { geo in
             let n = deltas.count
-            guard n > 0 else { return AnyView(EmptyView()) }
-            let barW = max(6, (geo.size.width - CGFloat(n - 1) * 3) / CGFloat(n))
-            let midY = geo.size.height / 2
-            AnyView(
+            if n == 0 {
+                EmptyView()
+            } else {
+                let barW = max(6, (geo.size.width - CGFloat(n - 1) * 3) / CGFloat(n))
+                let midY = geo.size.height / 2
                 HStack(alignment: .center, spacing: 3) {
                     ForEach(Array(deltas.enumerated()), id: \.offset) { _, delta in
                         let h = max(3, abs(delta) / scale * midY * 0.9)
@@ -268,7 +269,7 @@ struct RecoveryLabView: View {
                         .fill(StrandPalette.hairline)
                         .frame(height: 1)
                 }
-            )
+            }
         }
     }
 
