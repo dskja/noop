@@ -17,6 +17,21 @@ approximate; downloads are on the [Releases](https://github.com/ParthJadhav/noop
 
 ---
 
+## 9.0.1: Strand Sources parity fix (iOS)
+
+A focused polish release that keeps the v5 Strand hubs from drifting apart across platforms.
+
+**Fixed.**
+
+- **iOS Sources tab now labels the body group 'Health'.** The display label matches macOS and
+  Android; the expand/collapse preference is still keyed under the stable 'Body' identifier, so
+  existing settings are preserved.
+- **iOS Sources tab icons aligned with the macOS sidebar.** Compare, Trends, Stress, Breathe,
+  Data Sources and Support now use the same SF Symbols as their `NavItem` definitions (Compare and
+  Trends had each other's icon).
+
+---
+
 ## 9.0.0: Strand — the v5 hub redesign (all platforms)
 
 A major milestone release that restructures NOOP around four everyday hubs: **Today**, **Insights**,

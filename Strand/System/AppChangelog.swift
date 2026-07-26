@@ -7,7 +7,7 @@ enum AppChangelog {
 
     /// Bump this when you add a release below. The "What's New" sheet shows automatically when the
     /// stored last-seen version is behind this. (Decoupled from the bundle version on purpose.)
-    static let currentVersion = "9.0.0"
+    static let currentVersion = "9.0.1"
 
     struct Release: Identifiable {
         let version: String
@@ -19,6 +19,14 @@ enum AppChangelog {
 
     /// Newest first.
     static let releases: [Release] = [
+        Release(
+            version: "9.0.1",
+            title: "Strand polish: Sources parity fix",
+            date: "July 2026",
+            items: [
+                "**Sources parity fix.** The iOS Sources tab now shows the Health group with the same 'Health' label as macOS and Android, while still preserving your expand/collapse preference under the stable 'Body' key.",
+                "**Correct SF Symbols in Sources.** Compare, Trends, Stress, Breathe, Data Sources and Support now use the same icons as the macOS sidebar (Compare/Trends were swapped), so the three shells stop drifting apart.",
+            ]),
         Release(
             version: "9.0.0",
             title: "Strand: the v5 hub redesign",

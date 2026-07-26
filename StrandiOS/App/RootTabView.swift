@@ -287,16 +287,16 @@ struct RootTabView: View {
                     MoreRow("Coach", "sparkles") { CoachView() }
                     MoreRow("Insights", "lightbulb.fill") { InsightsView() }
                     MoreRow("Explore", "square.grid.2x2.fill") { MetricExplorerView() }
-                    MoreRow("Compare", "rectangle.split.2x1.fill") { CompareView() }
+                    MoreRow("Compare", "chart.line.uptrend.xyaxis") { CompareView() }
                 }
-                moreSection("Body") {
+                moreSection("Body", header: "Health") {
                     MoreRow("Sleep", "moon.stars.fill") { SleepView() }
-                    MoreRow("Trends", "chart.line.uptrend.xyaxis") { TrendsView() }
+                    MoreRow("Trends", "chart.xyaxis.line") { TrendsView() }
                     MoreRow("Live", "waveform.path.ecg") { LiveView() }
                     MoreRow("Workouts", "figure.run") { WorkoutsView() }
                     MoreRow("Lab Book", "books.vertical.fill") { LabBookView() }
-                    MoreRow("Stress", "bolt.heart.fill") { StressView() }
-                    MoreRow("Breathe", "wind") { BreathingView() }
+                    MoreRow("Stress", "gauge.with.dots.needle.50percent") { StressView() }
+                    MoreRow("Breathe", "lungs.fill") { BreathingView() }
                     MoreRow("Intervals", "timer") { IntervalTimerView() }
                     // Experimental beat-to-beat regularity visualization — self-gates on its own consent.
                     MoreRow("Rhythm", "waveform.path") { RhythmHost() }
@@ -306,7 +306,7 @@ struct RootTabView: View {
                     MoreRow("Your Data, Fused", "square.stack.3d.up.fill") { FusedRecordHost() }
                     MoreRow("Apple Health", "heart.fill") { AppleHealthView() }
                     MoreRow("Mi Band", "figure.walk.motion") { XiaomiBandView() }
-                    MoreRow("Data Sources", "externaldrive.fill") { DataSourcesView() }
+                    MoreRow("Data Sources", "square.and.arrow.down.fill") { DataSourcesView() }
                     MoreRow("Backup & Sync", "externaldrive.fill.badge.icloud") { BackupSyncView() }
                     // #155: HealthKit-free Apple Health path for sideloaded installs (Siri Shortcut
                     // reads the opt-in Documents/noop_sync.txt drop file).
@@ -330,7 +330,7 @@ struct RootTabView: View {
                     MoreRow("Test Centre", "stethoscope") { TestCentreView() }
                     MoreRow("Siri & Shortcuts", "mic.fill") { SiriShortcutsSettingsView() }
                     MoreRow("Settings", "gearshape.fill") { SettingsView() }
-                    MoreRow("Support", "hands.clap.fill") { SupportView() }
+                    MoreRow("Support", "heart.fill") { SupportView() }
                 }
             }
             .toolbar(.hidden, for: .tabBar)   // we draw our own FloatingTabBar
@@ -346,12 +346,16 @@ struct RootTabView: View {
     /// card's rounded shape so the last divider is trimmed inside the corners. Same idiom Settings/Health use.
     @ViewBuilder
     private func moreSection<Rows: View>(_ title: String,
+                                         header: String? = nil,
                                          @ViewBuilder rows: @escaping () -> Rows) -> some View {
+        let displayHeader = header ?? title
         let isOpen = expandedMoreSections.contains(title)
         VStack(alignment: .leading, spacing: 10) {
             // Tappable overline header: the same ALL-CAPS tracked label as before, now with a trailing
             // chevron that rotates open. A plain Button (not a SwiftUI DisclosureGroup) so the header keeps
             // the exact strandOverline styling and the card layout below stays identical to before.
+            // `title` is the stable persistence key (mirrored to Android MoreSectionPrefs); `header` is
+            // the visible label, so a section can rename without losing the user's expand/collapse state.
             Button {
                 withAnimation(.timingCurve(0.22, 1, 0.36, 1, duration: 0.24)) {
                     // Persist the toggle via the CSV-backed @AppStorage so the choice survives leaving and
@@ -362,7 +366,7 @@ struct RootTabView: View {
                 }
             } label: {
                 HStack(spacing: 6) {
-                    Text(title).strandOverline()
+                    Text(displayHeader).strandOverline()
                     Spacer(minLength: 8)
                     Image(systemName: "chevron.down")
                         .font(.system(size: 11, weight: .semibold))
@@ -373,7 +377,7 @@ struct RootTabView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(Text(title))
+            .accessibilityLabel(Text(displayHeader))
             .accessibilityValue(Text(isOpen ? String(localized: "Expanded") : String(localized: "Collapsed")))
             .accessibilityHint(Text(isOpen ? String(localized: "Double tap to collapse") : String(localized: "Double tap to expand")))
 
